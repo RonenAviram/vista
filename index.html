@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vista.AI · מערכת AI לגיוס משאבים</title>
+<meta name="description" content="סוכני AI שמוצאים לארגון שלכם הזדמנויות מימון, ושולחים רק את מה שמתאים: מה לעשות ועד מתי.">
+<meta property="og:title" content="Vista.AI · מערכת AI לגיוס משאבים, בארץ ובחו״ל">
+<meta property="og:description" content="הזדמנויות מימון שמתאימות לארגון שלכם, בארץ ובחו״ל. החל מ-₪165 לחודש.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vistagrants.co.il/">
+<meta property="og:image" content="https://vistagrants.co.il/assets/og-vista.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vistagrants.co.il/">
+<link rel="icon" href="assets/vista-favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8F9FB;
+  --surface: #FFFFFF;
+  --border: #E2E5EB;
+  --border-light: #EDEFF3;
+  --ink: #1A1D23;
+  --ink-2: #5A5F6B;
+  --ink-3: #6B7080;
+  --accent: #4F46E5;
+  --accent-hover: #4338CA;
+  --accent-soft: #EEF2FF;
+  --accent-border: #C7D2FE;
+  --green: #059669;
+  --green-soft: #ECFDF5;
+  --wa: #1FA855;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+bdi { unicode-bidi: isolate; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+/* brand bar */
+.bar { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 30; }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand img { width: 34px; height: 34px; border-radius: 8px; }
+.brand b { font-size: 17px; font-weight: 700; }
+.brand b span { color: var(--accent); }
+.bar-links { display: flex; align-items: center; gap: 18px; font-size: 14px; }
+.bar-links a { color: var(--ink-2); text-decoration: none; }
+.bar-links a:hover { color: var(--accent); }
+.bar .btn-sm { background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 10px; font-weight: 600; }
+.bar .btn-sm:hover { background: var(--accent-hover); color: #fff; }
+@media (max-width: 720px) { .bar-links .hide-m { display: none; } }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 26px; border-radius: 12px; font: inherit; font-weight: 700; font-size: 16px; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background .15s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-ghost { background: var(--surface); color: var(--accent); border-color: var(--accent-border); }
+.btn-ghost:hover { background: var(--accent-soft); }
+.btn-wa { background: var(--surface); color: var(--wa); border-color: #BBE8CC; }
+.btn-wa:hover { background: #F0FBF4; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+/* sections */
+section { padding: 56px 0; }
+.alt { background: var(--surface); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+h2 { font-size: clamp(26px, 4vw, 34px); font-weight: 800; line-height: 1.25; text-align: center; margin-bottom: 28px; }
+.sub { color: var(--ink-2); font-size: 17px; text-align: center; margin-bottom: 28px; }
+
+/* hero */
+.hero { padding: 60px 0 36px; text-align: center; }
+.hero h1 { font-size: clamp(32px, 6vw, 54px); font-weight: 800; line-height: 1.15; margin: 20px auto 16px; }
+.hero h1 span { color: var(--accent); }
+.hero .lead { font-size: clamp(17px, 2.4vw, 20px); color: var(--ink-2); max-width: 560px; margin: 0 auto 28px; }
+.hero .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.hero .meta { margin-top: 16px; font-size: 14px; color: var(--ink-3); }
+
+/* demo */
+.demo-section { padding-top: 0; }
+.window { max-width: 1100px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(79,70,229,0.14); overflow: hidden; }
+.window-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; background: #F1F3F7; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--ink-3); }
+.window-bar .dots { display: flex; gap: 6px; direction: ltr; }
+.window-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #D5D8DF; display: block; }
+.window-bar a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.window iframe { display: block; width: 100%; height: 760px; border: 0; }
+@media (max-width: 720px) { #try .window { display: none; } }
+.video-window video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #F8F9FB; }
+.demo-full-m { display: none; }
+@media (max-width: 720px) { .demo-full-m { display: flex; width: 100%; margin-top: 12px; } }
+.demo-hint { text-align: center; color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+.step .n { font-size: 28px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.step h3 { font-size: 18px; font-weight: 700; }
+.step p { color: var(--ink-2); font-size: 15px; }
+
+/* pricing */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+@media (max-width: 860px) { .plans { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; } }
+.plan { position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 26px; }
+.plan.featured { border: 2px solid var(--accent); box-shadow: 0 10px 30px rgba(79,70,229,0.12); }
+.plan:not(.featured) { margin: 1px; }
+.plan .badge { position: absolute; top: -13px; right: 24px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.plan h3 { font-size: 19px; font-weight: 700; }
+.amount { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 4px; }
+.amount b { font-size: 46px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+.amount span { color: var(--ink-2); font-size: 16px; }
+.terms { color: var(--ink-3); font-size: 14px; min-height: 22px; }
+.checks { list-style: none; margin: 18px 0 22px; padding-top: 16px; border-top: 1px solid var(--border-light); flex: 1; }
+.checks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; margin-bottom: 9px; }
+.checks svg { width: 19px; height: 19px; color: var(--green); flex: none; margin-top: 2px; }
+.plan .btn { width: 100%; }
+.roi-br { display: none; }
+/* desktop: plans + ROI fit one screen */
+@media (min-width: 861px) {
+  #pricing { padding: 26px 0 30px; }
+  #pricing h2 { margin-bottom: 20px; }
+  .plan { padding: 20px 22px; }
+  .amount { margin: 6px 0 2px; } .amount b { font-size: 40px; }
+  .checks { margin: 12px 0 16px; padding-top: 12px; }
+  .checks li { font-size: 14.5px; margin-bottom: 6px; }
+  .roi { display: grid; grid-template-columns: 210px 1fr; align-items: center; gap: 24px; margin-top: 16px; padding: 18px 24px; max-width: none; }
+  .roi-head { text-align: right; margin: 0; font-size: 20px; line-height: 1.35; }
+  .roi-row { margin-bottom: 8px; }
+  .roi-lbl b { font-size: 18px; }
+  .roi-note { margin-top: 8px; max-width: none; }
+  .roi-br { display: inline; }
+}
+@media (min-width: 861px) and (max-height: 860px) {
+  #pricing { padding: 16px 0 18px; } #pricing h2 { font-size: 28px; margin-bottom: 14px; }
+  .amount b { font-size: 34px; } .checks { margin: 10px 0 12px; padding-top: 10px; } .checks li { margin-bottom: 3px; }
+  .plan { padding: 18px 20px; } .roi { margin-top: 12px; padding: 12px 22px; } .roi-row { margin-bottom: 4px; } .roi-track { height: 22px; }
+}
+.addons { text-align: center; color: var(--ink-3); font-size: 14px; margin-top: 18px; }
+
+/* faq */
+.faq { max-width: 760px; }
+.faq details { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 0 20px; }
+.faq details + details, .faq-more, .faq-more details + details { margin-top: 10px; }
+.faq-all { text-align: center; margin-top: 18px; }
+.faq summary { cursor: pointer; list-style: none; padding: 15px 0; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 22px; color: var(--accent); font-weight: 400; }
+.faq details[open] summary::after { content: '−'; }
+.faq details p { color: var(--ink-2); padding-bottom: 16px; font-size: 15px; }
+
+/* plan selector */
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); font-size: 15px; font-weight: 600; color: var(--ink-2); cursor: pointer; text-align: center; padding: 6px; }
+.seg input:checked + span { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* about */
+.about { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: center; max-width: 820px; margin: 0 auto; }
+@media (max-width: 680px) { .about { grid-template-columns: 1fr; text-align: center; } .about img { max-width: 220px; } .about .ctas { justify-content: center; } }
+.about img { width: 100%; border-radius: 20px; display: block; margin: 0 auto; }
+.about h2 { text-align: inherit; margin-bottom: 4px; }
+.about .role { color: var(--ink-3); margin-bottom: 12px; }
+.about p { color: var(--ink-2); margin-bottom: 10px; }
+.about p.strong { color: var(--ink); font-weight: 700; }
+.about .ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+/* signup */
+.form-card { max-width: 560px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.field input { width: 100%; min-height: 48px; padding: 10px 14px; font: inherit; font-size: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--ink); }
+.field input:focus { outline: none; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-soft); }
+.field input[type=email], .field input[type=tel] { direction: ltr; text-align: right; }
+fieldset.field { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+.err { color: #B91C1C; font-size: 13px; margin-top: 4px; display: none; }
+.field.bad .err { display: block; }
+.field.bad input { border-color: #FCA5A5; }
+.form-card .btn { width: 100%; margin-top: 6px; }
+.form-note { font-size: 13px; color: var(--ink-3); text-align: center; margin-top: 12px; }
+.done { display: none; text-align: center; }
+.done h3 { font-size: 22px; margin-bottom: 6px; }
+.done .party { font-size: 54px; line-height: 1; margin-bottom: 8px; animation: pop .6s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes pop { from { transform: scale(.3) rotate(-20deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .done .party { animation: none; } }
+.done p { color: var(--ink-2); margin-bottom: 16px; }
+
+footer { text-align: center; padding: 28px 0 40px; color: var(--ink-3); font-size: 13px; border-top: 1px solid var(--border); background: var(--surface); }
+footer a { color: var(--ink-2); text-decoration: none; }
+footer .legal { margin-top: 4px; font-size: 11.5px; } footer .legal a { color: var(--ink-3); }
+
+/* mobile sticky cta */
+.sticky { display: none; }
+@media (max-width: 720px) {
+  .sticky { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.96); border-top: 1px solid var(--border); transform: translateY(110%); transition: transform .25s; }
+  .sticky.show { transform: none; }
+  .sticky .btn { flex: 1; min-height: 46px; padding: 10px; font-size: 15px; }
+  .sticky .btn-wa { flex: 0 0 52px; }
+  footer { padding-bottom: 96px; }
+}
+
+/* anchors land below the sticky bar */
+section, [id] { scroll-margin-top: 68px; }
+
+/* value strip */
+.values { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+@media (max-width: 960px) { .values { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .values { grid-template-columns: 1fr; } }
+.value { background: var(--bg); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; }
+.value svg { width: 26px; height: 26px; color: var(--accent); margin-bottom: 10px; }
+.value h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; line-height: 1.35; }
+.value p { color: var(--ink-2); font-size: 14px; }
+.value h3 em { font-style: normal; font-weight: 800; color: var(--accent); }
+.form-note a { color: var(--ink-2); }
+.done .ctas { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 720px) { .bar-links { gap: 14px; } }
+
+/* ROI strip */
+.roi { max-width: 760px; margin: 28px auto 0; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 26px 28px; }
+.roi-head { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 20px; }
+.roi-head em { font-style: normal; color: var(--accent); }
+.roi-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 14px; margin-bottom: 12px; }
+.roi-row:last-child { margin-bottom: 0; }
+.roi-lbl { font-size: 14px; color: var(--ink-2); }
+.roi-lbl b { display: block; font-size: 20px; color: var(--ink); font-weight: 800; line-height: 1.2; }
+.roi-track { height: 28px; background: var(--accent-soft); border-radius: 8px; overflow: hidden; }
+.roi-fill { height: 100%; width: 0; border-radius: 8px; background: var(--accent); transition: width 1.4s cubic-bezier(.2,.8,.2,1); }
+.roi-fill.cost { background: #A5B4FC; }
+.roi.go .grant { width: 100%; } .roi.go .cost { width: 19.8%; }
+@media (prefers-reduced-motion: reduce) { .roi-fill { transition: none; } }
+.roi-note { max-width: 760px; margin: 12px auto 0; text-align: center; color: var(--ink-2); font-size: 14px; }
+@media (max-width: 560px) { .roi { padding: 22px 18px; } .roi-head { font-size: 19px; } .roi-row { grid-template-columns: 96px 1fr; gap: 10px; } .roi-lbl b { font-size: 17px; } .roi-lbl { font-size: 12.5px; } }
+
+/* how it works: flow animation */
+.flow { max-width: 1040px; margin: 0 auto; }
+.flow svg { display: block; width: 100%; height: auto; overflow: visible; }
+.flow .flow-m { display: none; }
+@media (max-width: 640px) { .flow .flow-d { display: none; } .flow .flow-m { display: block; max-width: 380px; margin: 0 auto; } }
+.flow .wire { fill: none; stroke: #C7D2FE; stroke-width: 2.5; stroke-dasharray: 6 8; }
+.flow .wire.loop { stroke: #A5B4FC; stroke-dasharray: 4 7; }
+.flow .node rect { fill: #fff; stroke: #E2E5EB; stroke-width: 2; }
+.flow text { font-family: 'Heebo', sans-serif; text-anchor: middle; direction: rtl; }
+.flow .t { font-size: 20px; font-weight: 700; fill: var(--ink); }
+.flow .t.sm { font-size: 15px; }
+.flow .s { font-size: 14px; fill: var(--ink-2); }
+.flow .ht { font-size: 26px; font-weight: 800; fill: #fff; }
+.flow-m .ht { font-size: 23px; }
+.flow .spark path { fill: #fff; }
+.flow .spark .spark2 { fill: #C7D2FE; }
+.flow .loop-t { font-size: 16px; font-weight: 700; fill: var(--accent); }
+.flow .loop-pill rect { fill: #fff; stroke: #C7D2FE; stroke-width: 1.5; }
+.flow-m .loop-t { font-size: 14px; }
+.flow .dot { fill: var(--accent); }
+.flow .dot.g { fill: var(--green); }
+.flow .dot.l { fill: #818CF8; }
+.flow .halo { fill: #C7D2FE; transform-box: fill-box; transform-origin: center; animation: halo 8s infinite; }
+.flow .in rect { animation: inGlow 8s infinite; }
+.flow .n2 rect { animation-delay: .48s; }
+.flow .n3 rect { animation-delay: .96s; }
+.flow .o3 rect { animation-delay: .96s; }
+.flow .out rect { animation: outGlow 8s infinite; }
+.flow .o2 rect { animation-delay: .48s; }
+@keyframes inGlow { 0%, 4% { stroke: #E2E5EB; } 9%, 30% { stroke: var(--accent); } 40%, 100% { stroke: #E2E5EB; } }
+@keyframes outGlow { 0%, 60% { stroke: #E2E5EB; fill: #fff; } 66%, 88% { stroke: var(--green); fill: var(--green-soft); } 96%, 100% { stroke: #E2E5EB; fill: #fff; } }
+@keyframes halo { 0%, 32% { opacity: .35; transform: scale(.9); } 42%, 52% { opacity: 1; transform: scale(1.06); } 62%, 100% { opacity: .35; transform: scale(.9); } }
+@media (prefers-reduced-motion: reduce) { .flow .dot { display: none; } .flow .halo, .flow .in rect, .flow .out rect { animation: none; } }
+
+summary:focus { outline: none; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+
+.flow .ico { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.flow .ico .fill { fill: var(--accent); stroke: none; }
+.flow .ico .blip { fill: var(--green); stroke: none; }
+.flow .out .ico { stroke: var(--green); }
+.flow .out .ico .blip { fill: var(--accent); }
+
+/* try it yourself */
+.try { margin-top: 24px; padding-top: 8px; }
+.try-start { text-align: center; margin-top: 22px; }
+.tlink { display: flex; flex-direction: column; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+.tlink small { color: var(--ink-2); font-size: 14px; max-width: 220px; line-height: 1.5; margin-top: -6px; }
+.try-line .tstep:last-child .tdot { background: var(--surface); border-color: var(--accent-border); color: var(--accent); }
+.try-line .tstep:last-child .tnum { background: var(--accent); }
+.tdot { transition: transform .15s, background-color .15s, color .15s; }
+.tlink:hover .tdot, .tlink:focus-visible .tdot { transform: scale(1.06); background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+
+/* windows opened on the page: blurred backdrop */
+dialog.modal { margin: auto; inset: 0; width: min(1240px, 96vw); height: 92vh; max-height: none; padding: 0; border: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.25); }
+dialog.modal::backdrop { background: rgba(26,29,35,.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+dialog.modal.narrow { width: min(820px, 96vw); }
+dialog.sheet { margin: auto; inset: 0; width: min(600px, 94vw); max-height: 92vh; padding: 26px 0 8px; border: 0; border-radius: 20px; background: var(--bg); box-shadow: 0 24px 60px rgba(0,0,0,.25); overflow: auto; }
+dialog.sheet::backdrop { background: rgba(26,29,35,.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+dialog.sheet h2 { margin-bottom: 16px; font-size: 26px; padding: 0 84px; }
+@media (max-width: 560px) { dialog.sheet h2 { font-size: 22px; padding: 0 84px 0 16px; text-align: right; } }
+dialog.sheet .form-card { box-shadow: none; margin: 0 18px 12px; }
+@media (max-width: 560px) { dialog.sheet .form-card { margin: 0 10px 10px; padding: 20px; } }
+dialog.modal iframe { display: block; width: 100%; height: 100%; border: 0; }
+.modal-close { position: absolute; top: 12px; left: 12px; z-index: 2; font: inherit; font-weight: 600; border: 1px solid var(--border); background: #fff; border-radius: 10px; padding: 6px 14px; cursor: pointer; min-height: 40px; }
+@media (max-width: 720px) { dialog.modal, dialog.modal.narrow { width: 100vw; height: 100dvh; max-width: none; border-radius: 0; } }
+.calendly-overlay { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+/* how to start: schematic timeline */
+.timeline { list-style: none; display: flex; justify-content: center; gap: 0; max-width: 900px; margin: 0 auto; padding: 0; }
+.tstep { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 0 10px; }
+.tstep:not(:last-child)::after { content: ''; position: absolute; top: 40px; right: calc(50% + 52px); left: calc(-50% + 52px); border-top: 2px dashed var(--accent-border); }
+.tstep:not(:last-child)::before { content: ''; position: absolute; top: 35px; left: calc(-50% + 46px); border: 6px solid transparent; border-right: 9px solid var(--accent-border); }
+.tdot { position: relative; width: 80px; height: 80px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent-border); color: var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(79,70,229,.10); }
+.tstep:last-child .tdot { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tdot svg { width: 32px; height: 32px; }
+.tnum { position: absolute; top: -6px; right: -6px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 8px; border: 2px solid var(--bg); }
+.tstep:last-child .tnum { background: var(--green); }
+.tplus { color: var(--accent); font-weight: 800; }
+.tstep b { font-size: 17px; font-weight: 700; max-width: 240px; line-height: 1.4; }
+@media (max-width: 600px) {
+  .tstep b { font-size: 14px; max-width: none; } .tstep { padding: 0 4px; } .tlink small { font-size: 12.5px; }
+  .tdot { width: 64px; height: 64px; } .tdot svg { width: 26px; height: 26px; }
+  .tstep:not(:last-child)::after { top: 32px; right: calc(50% + 40px); left: calc(-50% + 40px); }
+  .tstep:not(:last-child)::before { top: 27px; left: calc(-50% + 34px); }
+}
+/* palette "שמיים וחול" (Ronen, 15.10.2026): navy, sky blue, amber on warm sand */
+:root { --D:#1F3A5F; --M:#5B8DB8; --Mt:#2F5F8F; --W:#E8A33D; --L:#FAF7F2; --S:#EFE6D8; --Ws:#FBF1DF; }
+:root { color-scheme: light;
+  --bg: var(--L); --surface:#FFFFFF; --border: var(--S); --border-light: var(--S);
+  --ink: var(--D); --ink-2: color-mix(in srgb, var(--D) 72%, #fff); --ink-3: color-mix(in srgb, var(--D) 62%, #fff);
+  --accent: var(--Mt); --accent-hover: var(--D); --accent-soft: color-mix(in srgb, var(--M) 12%, #fff); --accent-border: color-mix(in srgb, var(--M) 40%, #fff);
+  --green: var(--Mt); --green-soft: color-mix(in srgb, var(--M) 12%, #fff); }
+body { background: var(--L); color: var(--D); }
+.alt { background: #FFFFFF; }
+.bar { background: var(--D); border-bottom: 0; }
+.bar .brand b, .bar .brand { color: #fff; } .bar .brand b span { color: var(--W); }
+.bar .bar-links a { color: color-mix(in srgb, #fff 78%, var(--D)); } .bar .bar-links a:hover { color: #fff; }
+.bar .bar-links a.btn-sm { background: var(--W); color: var(--D); }
+.btn-primary, .btn-primary:hover { background: var(--W); color: var(--D); box-shadow: 0 8px 20px color-mix(in srgb, var(--W) 35%, transparent); }
+.btn-primary:hover { filter: brightness(1.05); }
+.btn-ghost { background: #fff; color: var(--Mt); border-color: var(--accent-border); }
+.pill { background: var(--S); color: var(--D); border-color: transparent; } .dot { background: var(--W); }
+.hero { background: radial-gradient(700px 300px at 50% 0%, color-mix(in srgb, var(--M) 14%, transparent), transparent 70%), var(--L); }
+.hero h1 { color: var(--D); } .hero h1 span { color: var(--Mt); }
+.value { background: var(--L); border-color: var(--S); } .value svg { color: var(--Mt); } .value h3 em { color: var(--W); }
+.tdot { border-color: var(--accent-border); color: var(--Mt); background: #fff; }
+.tstep:last-child .tdot { background: var(--W); border-color: var(--W); color: var(--D); }
+.tnum { background: var(--Mt); border-color: var(--L); } .tstep:last-child .tnum { background: var(--D); }
+.try-line .tstep:last-child .tdot { background: #fff; border-color: var(--accent-border); color: var(--Mt); }
+.try-line .tstep:last-child .tnum { background: var(--Mt); }
+.tlink:hover .tdot { background: var(--Mt) !important; border-color: var(--Mt) !important; }
+.plan.featured { border: 2px solid var(--W); box-shadow: 0 12px 30px color-mix(in srgb, var(--W) 22%, transparent); }
+.plan .badge { background: var(--W); color: var(--D); }
+.checks svg { color: var(--Mt); }
+.roi-head em { color: var(--Mt); } .roi-track { background: color-mix(in srgb, var(--M) 10%, #fff); }
+.roi-fill { background: var(--Mt); } .roi-fill.cost { background: var(--W); }
+.faq details { border-color: var(--S); } .faq summary::after { color: var(--Mt); }
+.seg input:checked + span { border-color: var(--Mt); background: var(--accent-soft); color: var(--Mt); }
+footer { background: var(--D); color: color-mix(in srgb, #fff 70%, var(--D)); border-top: 0; }
+footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, var(--D)); }
+/* flow */
+.flow .wire { stroke: color-mix(in srgb, var(--M) 45%, #fff); } .flow .wire.loop { stroke: var(--W); }
+.flow marker path { fill: color-mix(in srgb, var(--M) 60%, #fff); }
+.flow .node rect { fill: #fff; stroke: var(--S); }
+.flow .t { fill: var(--D); } .flow .s { fill: color-mix(in srgb, var(--D) 70%, #fff); }
+.flow .loop-pill rect { fill: #fff; stroke: var(--W); } .flow .loop-t { fill: var(--D); }
+.flow .halo { fill: color-mix(in srgb, var(--M) 30%, #fff); }
+.flow stop:first-child { stop-color: var(--M); } .flow stop:last-child { stop-color: var(--D); }
+.flow .dot { fill: var(--Mt); } .flow .dot.g { fill: var(--W); } .flow .dot.l { fill: var(--W); }
+.flow .ico { stroke: var(--Mt); } .flow .ico .fill { fill: var(--Mt); } .flow .out .ico { stroke: color-mix(in srgb, var(--W) 80%, var(--D)); } .flow .ico .blip { fill: var(--Mt); }
+.flow .in rect { animation-name: inGlowP; } .flow .out rect { animation-name: outGlowP; }
+@keyframes inGlowP { 0%, 4% { stroke: var(--S); } 9%, 30% { stroke: var(--Mt); } 40%, 100% { stroke: var(--S); } }
+@keyframes outGlowP { 0%, 60% { stroke: var(--S); fill: #fff; } 66%, 88% { stroke: var(--W); fill: var(--Ws); } 96%, 100% { stroke: var(--S); fill: #fff; } }
+.bar .brand img { border-radius: 8px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.35); }
+
+.mc-m { display: none; }
+@media (max-width: 720px) { .mc-d { display: none; } .mc-m { display: inline; } }
+
+/* phones: one plan at a time, chosen by tabs (Ronen, 15.10.2026) */
+.plan-tabs, .roi-line { display: none; }
+@media (max-width: 860px) {
+  #pricing { padding: 24px 0 28px; } #pricing h2 { font-size: 24px; margin-bottom: 12px; }
+  .plan-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--S); border-radius: 12px; padding: 4px; max-width: 460px; margin: 0 auto 18px; }
+  .plan-tabs button { font: inherit; font-size: 14px; font-weight: 700; border: 0; background: transparent; color: var(--ink-2); border-radius: 9px; min-height: 40px; cursor: pointer; }
+  .plan-tabs button[aria-selected="true"] { background: #fff; color: var(--D); box-shadow: 0 1px 4px rgba(31,58,95,.15); }
+  .plans .plan:not(.on) { display: none; }
+  .plans .plan.on { border: 2px solid var(--W); box-shadow: 0 12px 30px color-mix(in srgb, var(--W) 22%, transparent); margin: 0; }
+  .plan { padding: 18px 20px; } .amount b { font-size: 38px; } .checks { margin: 10px 0 14px; padding-top: 10px; } .checks li { margin-bottom: 4px; font-size: 14.5px; }
+  .roi { display: none; }
+  .roi-line { display: block; text-align: center; margin: 14px auto 0; font-size: 15px; color: var(--ink-2); }
+  .roi-line b { color: var(--Mt); }
+}
+
+.value .v-m { display: none; color: var(--ink-2); font-size: 14px; list-style: none; padding: 0; margin: 0; }
+.value .v-m li { position: relative; padding-right: 14px; margin-top: 4px; }
+.value .v-m li::before { content: ""; position: absolute; right: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--Mt); }
+@media (max-width: 720px) { .value .v-d { display: none; } .value .v-m { display: block; } }
+/* videos: Ronen's 4 short guides, above "how it works" */
+.videos-section { padding-top: 8px; }
+.videos-section + .demo-section { padding-top: 24px; }
+.videos-section h2 { margin-bottom: 8px; }
+.vid-sub { text-align: center; color: var(--ink-2); margin: 0 auto 24px; }
+.vids { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 960px) { .vids { grid-template-columns: repeat(2, 1fr); } }
+.vid { background: var(--L); border: 1px solid var(--S); border-radius: 16px; padding: 10px 10px 14px; text-align: right; font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.vid:focus-visible { outline: 3px solid var(--M); outline-offset: 2px; }
+.vid-poster { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; background: radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--M) 30%, transparent), transparent 70%), var(--S); display: grid; place-items: center; }
+.vid-play { width: 48px; height: 48px; border-radius: 50%; background: var(--W); display: grid; place-items: center; transition: transform .2s; }
+.vid-play svg { width: 18px; height: 18px; margin-right: -3px; color: var(--D); }
+.vid:hover .vid-play { transform: scale(1.08); }
+.vid .tnum { top: 8px; right: 8px; }
+.vid h3 { font-size: 16px; font-weight: 700; line-height: 1.3; padding: 0 4px; }
+.vid p { font-size: 13px; color: var(--ink-2); padding: 0 4px; }
+/* hero intro: the V assembles, the name and line follow, then the benefits rotate */
+.intro-mark { display: block; width: 64px; height: 64px; margin: 22px auto 6px; overflow: visible; }
+.intro-mark .im-l, .intro-mark .im-r { fill: var(--D); }
+.intro-mark .im-sun { fill: var(--W); }
+.hero h1.intro-name { font-size: clamp(44px, 8vw, 68px); font-weight: 800; letter-spacing: -1px; line-height: 1.05; margin: 0 auto 8px; color: var(--D); }
+.hero h1.intro-name span { color: var(--Mt); }
+.intro-tag { font-size: clamp(18px, 2.6vw, 22px); font-weight: 600; color: var(--D); margin: 0 auto 18px; }
+.rotator { display: grid; justify-items: center; margin: 0 auto 22px; font-size: clamp(22px, 4.2vw, 34px); font-weight: 800; color: var(--Mt); line-height: 1.25; }
+.rotator .rot { grid-area: 1 / 1; padding-bottom: 8px; position: relative; opacity: 0; transform: translateY(60%); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+.rotator .rot::after { content: ""; position: absolute; inset: auto 15% 0; height: 4px; border-radius: 4px; background: var(--W); transform: scaleX(0); transition: transform .7s .25s cubic-bezier(.2,.8,.2,1); }
+.rotator .rot em { font-style: normal; color: var(--W); }
+.rotator .rot.on { opacity: 1; transform: none; }
+.rotator .rot.on::after { transform: scaleX(1); }
+.rotator .rot.out { opacity: 0; transform: translateY(-60%); }
+@keyframes imL { from { transform: translateX(-34px); opacity: 0; } }
+@keyframes imR { from { transform: translateX(34px); opacity: 0; } }
+@keyframes imSun { from { transform: translateY(46px); opacity: 0; } }
+@keyframes upIn { from { transform: translateY(16px); opacity: 0; } }
+.intro-mark .im-l { animation: imL .6s cubic-bezier(.2,.8,.2,1) both; }
+.intro-mark .im-r { animation: imR .6s cubic-bezier(.2,.8,.2,1) both; }
+.intro-mark .im-sun { animation: imSun .7s .45s cubic-bezier(.2,.8,.2,1) both; }
+.hero .intro-name { animation: upIn .6s .75s both; }
+.hero .intro-tag { animation: upIn .6s .95s both; }
+.hero .rotator { animation: upIn .6s 1.15s both; }
+.hero .lead { animation: upIn .6s 1.35s both; }
+.hero .ctas { animation: upIn .6s 1.5s both; }
+/* scroll: thin progress line under the bar, and sections rise in as they arrive */
+.scroll-progress { position: absolute; inset: auto 0 0 0; height: 3px; background: var(--W); transform-origin: right; transform: scaleX(0); pointer-events: none; }
+.rv { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+.rv.pre { opacity: 0; transform: translateY(24px); }
+@media (prefers-reduced-motion: reduce) {
+  .intro-mark *, .hero .intro-name, .hero .intro-tag, .hero .rotator, .hero .lead, .hero .ctas { animation: none; }
+  .rotator .rot, .rotator .rot::after, .rv { transition: none; }
+  .rv.pre { opacity: 1; transform: none; }
+}
+/* the flow loop starts when the diagram comes into view, so the first thing seen is the inputs moving in */
+.flow:not(.play) .halo, .flow:not(.play) .in rect, .flow:not(.play) .out rect { animation: none; }
+#send-failed-cta[hidden] { display: none; }
+.bar .brand img.vmark { box-shadow: none; border-radius: 0; }
+.bar .brand b[dir] { font-size: 20px; font-weight: 800; }
+.try-hint { text-align: center; color: var(--ink-2); font-size: 15px; margin-bottom: 14px; }
+.opt-tag { font-size: 12px; padding: 2px 10px; margin-top: -8px; }
+.hero .no-sys { display: inline-flex; align-items: center; gap: 8px; font-size: clamp(12.5px, 3.4vw, 15px); white-space: nowrap; max-width: 100%; font-weight: 600; color: var(--D); background: #fff; border: 1px solid var(--S); border-radius: 999px; padding: 6px clamp(10px, 3vw, 16px); margin: -8px auto 24px; animation: upIn .6s 1.42s both; }
+@media (prefers-reduced-motion: reduce) { .hero .no-sys { animation: none; } }
+@media (max-width: 720px) { .bar-links .faq-link { font-size: 13.5px; white-space: nowrap; } }
+/* getting started: the payoff (step 2) is highlighted, not the optional last step */
+.timeline:not(.try-line) .tstep:last-child .tdot { background: #fff; border-color: var(--accent-border); color: var(--Mt); }
+.timeline:not(.try-line) .tstep:last-child .tnum { background: var(--Mt); }
+.timeline:not(.try-line) .tstep.hi .tdot { background: var(--W); border-color: var(--W); color: var(--D); }
+.timeline:not(.try-line) .tstep.hi .tnum { background: var(--D); }
+</style>
+</head>
+<body>
+
+<header class="bar"><span class="scroll-progress" aria-hidden="true"></span>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Vista.AI">
+      <img class="vmark" src="assets/vista-mark-white.svg" alt="">
+      <b dir="ltr">Vista<span>.AI</span></b>
+    </a>
+    <nav class="bar-links">
+      <a class="hide-m" href="#demo">איך זה עובד</a>
+      <a class="hide-m" href="#try">נסו בעצמכם</a>
+      <a class="hide-m" href="#pricing">מחיר</a>
+      <a class="faq-link" href="#faq">שאלות ותשובות</a>
+      <a class="hide-m" href="#about">מי אני</a>
+      <a class="btn-sm" href="#pricing">להצטרפות</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <svg class="intro-mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="im-sun" cx="50" cy="28" r="11"/><path class="im-l" d="M4 20 H30 L51 66 V92 H43 Z"/><path class="im-r" d="M96 20 H70 L49 66 V92 H57 Z"/></svg>
+    <h1 class="intro-name"><bdi dir="ltr">Vista<span>.AI</span></bdi></h1>
+    <p class="intro-tag">מערכת AI לגיוס משאבים, בארץ ובחו״ל</p>
+    <p class="rotator" aria-label="חוסכת לכם שעות של חיפוש, מוצאת הזדמנויות שלא הכרתם, מעלה את סיכויי הקבלה, חושפת פערים באסטרטגיית הגיוס">
+      <span class="rot on" aria-hidden="true">חוסכת לכם <em>שעות</em> של חיפוש</span>
+      <span class="rot" aria-hidden="true">מוצאת הזדמנויות <em>שלא הכרתם</em></span>
+      <span class="rot" aria-hidden="true">מעלה את <em>סיכויי הקבלה</em></span>
+      <span class="rot" aria-hidden="true">חושפת <em>פערים</em> באסטרטגיית הגיוס</span>
+    </p>
+    <p class="lead">הסוכנים סורקים קרנות, קולות קוראים, משרדי ממשלה, רשויות ומאגרים פתוחים, בארץ ובחו״ל, בודקים כל הזדמנות מול הפרופיל של הארגון שלכם, ומביאים עד אליכם את ההזדמנויות בעלות סיכויי הקבלה הגבוהים ביותר.</p>
+    <p class="no-sys">בלי התקנה ובלי סיסמאות: ההזדמנויות מגיעות אליכם למייל</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#signup">לקביעת שיחת היכרות קצרה</a>
+    </div>
+  </div>
+</div>
+
+<section id="videos" class="videos-section" hidden>
+  <div class="wrap">
+    <h2>הכירו את המערכת</h2>
+    <p class="vid-sub">ארבעה סרטונים קצרים, אחד לכל שלב.</p>
+    <div class="vids">
+      <button type="button" class="vid" data-video="1"><span class="vid-poster"><span class="tnum">01</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>בניית הפרופיל</h3><p>איך הסוכנים לומדים את הארגון שלכם</p></button>
+      <button type="button" class="vid" data-video="2"><span class="vid-poster"><span class="tnum">02</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>סריקת ההזדמנויות</h3><p>אילו קולות קוראים מתאימים, ולמה</p></button>
+      <button type="button" class="vid" data-video="3"><span class="vid-poster"><span class="tnum">03</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>בניית ההגשה</h3><p>מהקול הקורא לטיוטת הגשה</p></button>
+      <button type="button" class="vid" data-video="4"><span class="vid-poster"><span class="tnum">04</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>מאחורי הקלעים</h3><p>מה הסוכנים עושים בזמן שאתם עובדים</p></button>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="demo-section">
+  <div class="wrap">
+    <h2>איך זה עובד</h2>
+    <div class="flow" aria-label="פרופיל הארגון, דרישות הגוף המממן וסכום היעד נכנסים לסוכני ה-AI. יוצאות הזדמנויות מותאמות, טיוטת הגשה ותובנות אסטרטגיות, ומערכת ה-AI לומדת ומשתפרת מהזדמנות להזדמנות.">
+      <!-- desktop: inputs on the right, outputs on the left -->
+      <svg class="flow-d" viewBox="0 0 1040 500"><defs><radialGradient id="hubG" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#4338CA"/></radialGradient><marker id="arrD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A5B4FC"/></marker><marker id="arrW" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7D2FE"/></marker></defs><path id="dLoop" class="wire loop" d="M150,76 C150,40 200,30 300,30 L820,30 C890,30 905,40 905,72" marker-end="url(#arrD)"/><path id="dIn1" class="wire" d="M780,132 C700,132 690,276 606,276" marker-end="url(#arrW)"/><path id="dOut1" class="wire" d="M434,276 C370,276 360,132 302,132" marker-end="url(#arrW)"/><path id="dIn2" class="wire" d="M780,276 C700,276 690,276 606,276" marker-end="url(#arrW)"/><path id="dOut2" class="wire" d="M434,276 C370,276 360,276 302,276" marker-end="url(#arrW)"/><path id="dIn3" class="wire" d="M780,420 C700,420 690,276 606,276" marker-end="url(#arrW)"/><path id="dOut3" class="wire" d="M434,276 C370,276 360,420 302,420" marker-end="url(#arrW)"/><g class="node in n1"><rect x="780" y="76" width="250" height="112" rx="16"/><g class="ico" transform="translate(892.0,88.0) scale(1.083)"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-5h4v5M9 11h.01M15 11h.01"/></g><text class="t" x="905.0" y="136">פרופיל הארגון</text><text class="s" x="905.0" y="160">פעילות, אימפקט, ייחוד</text></g><g class="node in n2"><rect x="780" y="220" width="250" height="112" rx="16"/><g class="ico" transform="translate(892.0,232.0) scale(1.083)"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4M9 11l2 2 4-4M9 17h6"/></g><text class="t" x="905.0" y="280">דרישות הגוף המממן</text><text class="s" x="905.0" y="304">קריטריונים, סכומים, דדליין</text></g><g class="node in n3"><rect x="780" y="364" width="250" height="112" rx="16"/><g class="ico" transform="translate(892.0,376.0) scale(1.083)"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" class="fill"/></g><text class="t" x="905.0" y="424">סכום היעד</text><text class="s" x="905.0" y="448">כמה, למה, ולמה דווקא אתם</text></g><g class="hub"><circle class="halo" cx="520" cy="276" r="106"/><circle cx="520" cy="276" r="84" fill="url(#hubG)"/><g class="spark" transform="translate(520,232)"><path d="M0,-17 C1.63,-5.44 5.44,-1.63 17,0 C5.44,1.63 1.63,5.44 0,17 C-1.63,5.44 -5.44,1.63 -17,0 C-5.44,-1.63 -1.63,-5.44 0,-17 Z"/><path class="spark2" transform="translate(16.15,-14.45)" d="M0,-7.65 C0.73,-2.45 2.45,-0.73 7.65,0 C2.45,0.73 0.73,2.45 0,7.65 C-0.73,2.45 -2.45,0.73 -7.65,0 C-2.45,-0.73 -0.73,-2.45 0,-7.65 Z"/></g><text class="ht" x="520" y="286">סוכני</text><text class="ht" x="520" y="315">AI</text></g><g class="node out o1"><rect x="0" y="76" width="300" height="112" rx="16"/><g class="ico" transform="translate(137.0,88.0) scale(1.083)"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16 16M8 11l2.2 2.2L14.5 9"/></g><text class="t" x="150.0" y="136">הזדמנויות מותאמות</text><text class="s" x="150.0" y="160">להגשה מיידית · דרושה התאמה · צפויה להיפתח</text></g><g class="node out o2"><rect x="0" y="220" width="300" height="112" rx="16"/><g class="ico" transform="translate(137.0,232.0) scale(1.083)"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g><text class="t" x="150.0" y="280">טיוטת הגשה</text><text class="s" x="150.0" y="304">ניתנת לעריכה, חוסכת לכם את העבודה הידנית</text></g><g class="node out o3"><rect x="0" y="364" width="300" height="112" rx="16"/><g class="ico" transform="translate(137.0,376.0) scale(1.083)"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6.4-6.4"/><circle cx="8" cy="14" r="1.5" class="blip"/></g><text class="t" x="150.0" y="424">תובנות אסטרטגיות</text><text class="s" x="150.0" y="448">גופים וקרנות שנמצאים מחוץ לרדאר שלכם</text></g><circle class="dot " r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.04;0.30;1" calcMode="linear"><mpath href="#dIn1"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.29;0.31;1"/></circle><circle class="dot " r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.10;0.32;1" calcMode="linear"><mpath href="#dIn2"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.10;0.31;0.33;1"/></circle><circle class="dot " r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.16;0.34;1" calcMode="linear"><mpath href="#dIn3"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.16;0.33;0.35;1"/></circle><circle class="dot g" r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.46;0.60;1" calcMode="linear"><mpath href="#dOut1"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.46;0.59;0.61;1"/></circle><circle class="dot g" r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.50;0.64;1" calcMode="linear"><mpath href="#dOut2"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.50;0.63;0.65;1"/></circle><circle class="dot g" r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.54;0.68;1" calcMode="linear"><mpath href="#dOut3"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.54;0.67;0.69;1"/></circle><circle class="dot l" r="6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.74;0.96;1" calcMode="linear"><mpath href="#dLoop"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.74;0.95;0.97;1"/></circle><g class="loop-pill"><rect x="370" y="-3" width="300" height="68" rx="18"/><text class="loop-t" x="520" y="23">מערכת AI לומדת</text><text class="loop-t" x="520" y="50">ומשתפרת מהזדמנות להזדמנות</text></g></svg>
+<svg class="flow-m" viewBox="0 0 360 650"><defs><radialGradient id="hubGM" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#4338CA"/></radialGradient><marker id="arrM" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A5B4FC"/></marker><marker id="arrWM" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7D2FE"/></marker></defs><path id="mLoop" class="wire loop" d="M176,544 C176,594 200,600 250,600 L330,600 C352,600 356,588 356,568 L356,30 C356,16 340,12 320,12 L300,12 C296,12 296,22 296,36" marker-end="url(#arrM)"/><path id="mIn1" class="wire" d="M296.0,144 C296.0,194 180,186 180,226" marker-end="url(#arrWM)"/><path id="mOut1" class="wire" d="M180,362 C180,396 296.0,400 296.0,436" marker-end="url(#arrWM)"/><path id="mIn2" class="wire" d="M176.0,144 C176.0,194 180,186 180,226" marker-end="url(#arrWM)"/><path id="mOut2" class="wire" d="M180,362 C180,396 176.0,400 176.0,436" marker-end="url(#arrWM)"/><path id="mIn3" class="wire" d="M56.0,144 C56.0,194 180,186 180,226" marker-end="url(#arrWM)"/><path id="mOut3" class="wire" d="M180,362 C180,396 56.0,400 56.0,436" marker-end="url(#arrWM)"/><g class="node in n1"><rect x="244" y="40" width="104" height="104" rx="16"/><g class="ico" transform="translate(285.0,52.0) scale(0.917)"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-5h4v5M9 11h.01M15 11h.01"/></g><text class="t sm" x="296.0" y="94">פרופיל</text><text class="t sm" x="296.0" y="115">הארגון</text></g><g class="node in n2"><rect x="124" y="40" width="104" height="104" rx="16"/><g class="ico" transform="translate(165.0,52.0) scale(0.917)"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4M9 11l2 2 4-4M9 17h6"/></g><text class="t sm" x="176.0" y="94">דרישות</text><text class="t sm" x="176.0" y="115">הגוף המממן</text></g><g class="node in n3"><rect x="4" y="40" width="104" height="104" rx="16"/><g class="ico" transform="translate(45.0,52.0) scale(0.917)"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" class="fill"/></g><text class="t sm" x="56.0" y="94">סכום</text><text class="t sm" x="56.0" y="115">היעד</text></g><g class="hub"><circle class="halo" cx="180" cy="296" r="80"/><circle cx="180" cy="296" r="64" fill="url(#hubGM)"/><g class="spark" transform="translate(180,264)"><path d="M0,-13 C1.25,-4.16 4.16,-1.25 13,0 C4.16,1.25 1.25,4.16 0,13 C-1.25,4.16 -4.16,1.25 -13,0 C-4.16,-1.25 -1.25,-4.16 0,-13 Z"/><path class="spark2" transform="translate(12.35,-11.05)" d="M0,-5.8500000000000005 C0.56,-1.87 1.87,-0.56 5.8500000000000005,0 C1.87,0.56 0.56,1.87 0,5.8500000000000005 C-0.56,1.87 -1.87,0.56 -5.8500000000000005,0 C-1.87,-0.56 -0.56,-1.87 0,-5.8500000000000005 Z"/></g><text class="ht" x="180" y="308">סוכני</text><text class="ht" x="180" y="334">AI</text></g><g class="node out o1"><rect x="244" y="440" width="104" height="104" rx="16"/><g class="ico" transform="translate(285.0,452.0) scale(0.917)"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16 16M8 11l2.2 2.2L14.5 9"/></g><text class="t sm" x="296.0" y="494">הזדמנויות</text><text class="t sm" x="296.0" y="515">מותאמות</text></g><g class="node out o2"><rect x="124" y="440" width="104" height="104" rx="16"/><g class="ico" transform="translate(165.0,452.0) scale(0.917)"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g><text class="t sm" x="176.0" y="494">טיוטת</text><text class="t sm" x="176.0" y="515">הגשה</text></g><g class="node out o3"><rect x="4" y="440" width="104" height="104" rx="16"/><g class="ico" transform="translate(45.0,452.0) scale(0.917)"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6.4-6.4"/><circle cx="8" cy="14" r="1.5" class="blip"/></g><text class="t sm" x="56.0" y="494">תובנות</text><text class="t sm" x="56.0" y="515">אסטרטגיות</text></g><circle class="dot " r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.04;0.30;1" calcMode="linear"><mpath href="#mIn1"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.29;0.31;1"/></circle><circle class="dot " r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.10;0.32;1" calcMode="linear"><mpath href="#mIn2"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.10;0.31;0.33;1"/></circle><circle class="dot " r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.16;0.34;1" calcMode="linear"><mpath href="#mIn3"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.16;0.33;0.35;1"/></circle><circle class="dot g" r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.46;0.60;1" calcMode="linear"><mpath href="#mOut1"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.46;0.59;0.61;1"/></circle><circle class="dot g" r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.50;0.64;1" calcMode="linear"><mpath href="#mOut2"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.50;0.63;0.65;1"/></circle><circle class="dot g" r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.54;0.68;1" calcMode="linear"><mpath href="#mOut3"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.54;0.67;0.69;1"/></circle><circle class="dot l" r="5"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.74;0.96;1" calcMode="linear"><mpath href="#mLoop"/></animateMotion><animate attributeName="opacity" dur="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.74;0.95;0.97;1"/></circle><g class="loop-pill"><rect x="48" y="569" width="260" height="62" rx="16"/><text class="loop-t" x="178" y="593">מערכת AI לומדת</text><text class="loop-t" x="178" y="618">ומשתפרת מהזדמנות להזדמנות</text></g></svg>
+    </div>
+
+    <div id="try" class="try">
+      <p class="try-hint">לחצו על כל שלב כדי לראות אותו בפעולה</p>
+      <ol class="timeline try-line">
+        <li class="tstep"><a class="tlink" href="fundraising-demo.html#profile" data-modal="fundraising-demo.html#profile"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-1.8 2-2.8 3.5-2.8s2.9 1 3.5 2.8M15 10h3M15 13.5h3"/></svg><span class="tnum">01</span></span><b>בניית הפרופיל</b><small>צפו בסוכנים לומדים ארגון לדוגמה</small></a></li>
+        <li class="tstep"><a class="tlink" href="fundraising-demo.html#scan" data-modal="fundraising-demo.html#scan"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3M8.5 11h5M11 8.5v5"/></svg><span class="tnum">02</span></span><b>סריקת הזדמנויות</b><small>אילו קולות קוראים מתאימים, ולמה</small></a></li>
+        <li class="tstep"><a class="tlink" href="fundraising-demo.html#submit" data-modal="fundraising-demo.html#submit"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span class="tnum">03</span></span><b>בניית ההגשה</b><small>מבקשים טיוטה, ורואים איך היא נבנית</small></a></li>
+      </ol>
+      <div class="try-start"><a class="btn btn-primary" href="fundraising-demo.html#profile" data-modal="fundraising-demo.html#profile">נסו בעצמכם
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>מה זה נותן לכם</h2>
+    <div class="values">
+      <div class="value">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>פחות זמן בחיפוש</h3><p>הסוכנים סורקים.<br>אליכם מגיע רק מה שמתאים.</p>
+      </div>
+      <div class="value">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+        <h3>חיסכון <em>אדיר</em> בזמן</h3><p>מהקול הקורא לטיוטת הגשה, בסגנון הכתיבה שלכם.</p>
+      </div>
+      <div class="value">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.5"/></svg>
+        <h3>מתאמצים פחות, מדייקים יותר</h3><p>רק הזדמנויות שמתאימות לפרופיל ולאסטרטגיה שלכם.</p>
+      </div>
+      <div class="value">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>
+        <h3>חידוד מסרים והצפת פערים</h3><p>למה דווקא אתם, מה חסר כדי להגיש, כמה זמן עוד נותר.</p>
+      </div>
+      <div class="value">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 16V10M11 16V6M16 16v-4M21 16V8"/></svg>
+        <h3>זום-אאוט לתמונה הגדולה</h3><p class="v-d">זיהוי תלות במממן יחיד, גופים, תורמים פרטיים או קרנות שאתם לא מכירים, קשרים ששווה לחדש.</p><ul class="v-m"><li>זיהוי תלות במממן יחיד</li><li>גופים, תורמים פרטיים וקרנות שאתם לא מכירים</li><li>קשרים ששווה לחדש</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>איך מתחילים</h2>
+    <ol class="timeline">
+      <li class="tstep"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5M19 8v6M16 11h6"/></svg><span class="tnum">01</span></span><b>נרשמים</b></li>
+      <li class="tstep hi"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2-8h12l2 8v6H4z"/><path d="M4 13h5l1 2h4l1-2h5"/></svg><span class="tnum">02</span></span><b>הזדמנויות ראשונות<br>נוחתות אצלכם במייל</b></li>
+      <li class="tstep"><span class="tdot"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span class="tnum">03</span></span><b>משתפים חומרים,<br>וההזדמנויות מדויקות יותר</b><span class="pill opt-tag">לבחירתכם</span></li>
+    </ol>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="alt">
+  <div class="wrap">
+    <h2>בוחרים מסלול</h2>
+    <div class="plan-tabs" role="tablist" aria-label="מסלולים">
+      <button type="button" role="tab" data-i="0" aria-selected="false">3 חודשים</button>
+      <button type="button" role="tab" data-i="1" aria-selected="true">שנתי</button>
+      <button type="button" role="tab" data-i="2" aria-selected="false">ליווי צמוד</button>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>3 חודשים</h3>
+        <div class="amount"><b><bdi dir="ltr">₪225</bdi></b><span>לחודש</span></div>
+        <div class="terms">3 חודשים ראשונים, ואחר כך חודש-בחודשו</div>
+        <ul class="checks">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>פגישת אפיון ופרופיל ארגון</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>תובנות גיוס ראשונות</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>מייל הזדמנויות קבוע</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>מפת מממנים וגופים דומים</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>טיוטת הגשה אחת בחודש</li>
+        </ul>
+        <a class="btn btn-ghost" href="#signup" data-buy="3 חודשים">לרכישה</a>
+      </div>
+      <div class="plan featured">
+        <span class="badge">מומלץ</span>
+        <h3>שנתי</h3>
+        <div class="amount"><b><bdi dir="ltr">₪165</bdi></b><span>לחודש</span></div>
+        <div class="terms">חיסכון של <bdi dir="ltr">₪720</bdi></div>
+        <ul class="checks">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>כל מה שבמסלול 3 חודשים</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>מחיר נעול לשנה</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>שנה שלמה של למידה: ככל שהמערכת מכירה אתכם יותר, ההתאמות מדויקות יותר</li>
+        </ul>
+        <a class="btn btn-primary" href="#signup" data-buy="שנתי">לרכישה</a>
+      </div>
+      <div class="plan">
+        <h3>ליווי צמוד</h3>
+        <div class="amount"><b><bdi dir="ltr">₪440</bdi></b><span>לחודש</span></div>
+        <div class="terms">התחייבות ל-6 חודשים · מספר מקומות מוגבל</div>
+        <ul class="checks">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>כל מה שבמסלולים האחרים</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>פגישת עבודה חודשית</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>אסטרטגיית גיוס מלאה ועדכון רבעוני</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>טיוטות הגשה שוטפות, בהיקף שנסכם יחד</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>מחקר עומק רבעוני על מממנים חדשים</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>גישה צמודה ואפשרות לבקש יכולות ספציפיות עבור הארגון שלכם</li>
+        </ul>
+        <a class="btn btn-ghost" href="#signup" data-buy="ליווי צמוד">לרכישה</a>
+      </div>
+    </div>
+    <p class="roi-line">מענק אחד של <bdi dir="ltr">₪10,000</bdi> מחזיר את המנוי <b>פי 5</b></p>
+    <div class="roi" id="roi">
+      <div class="roi-head">מענק אחד מחזיר<br class="roi-br"> את המנוי <em>פי 5</em></div>
+      <div class="roi-bars">
+      <div class="roi-row"><div class="roi-lbl"><b><bdi dir="ltr">₪10,000</bdi></b>מענק אחד, לדוגמה</div><div class="roi-track"><div class="roi-fill grant"></div></div></div>
+      <div class="roi-row"><div class="roi-lbl"><b><bdi dir="ltr">₪1,980</bdi></b>מנוי שנתי</div><div class="roi-track"><div class="roi-fill cost"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq">
+    <h2>שאלות ותשובות</h2>
+    <details><summary>מה ההבדל ממאגר קרנות?</summary><p>מאגר קרנות הוא רשימה סגורה וסופית, ואתם מחפשים ומסננים בעצמכם.<br>כאן סוכני ה-AI מחפשים בשבילכם <bdi dir="ltr">24/7</bdi> ברחבי הרשת, בארץ ובחו״ל: באתרי קרנות, בקולות קוראים, במשרדי ממשלה וברשויות, וגם במאגרים פתוחים. במקום רשימה אקראית, מקבלים הזדמנויות במיקוד גבוה לפרופיל הארגון שלכם.</p></details>
+    <details><summary>האם מערכת ה-AI תחליף את מגייסי המשאבים?</summary><p>לא. אין תחליף לקשר האנושי. היא פשוט תפנה לכם את הזמן והראש להתעסק במהות התפקיד.</p></details>
+    <details><summary>מי מגיש בפועל?</summary><p>אתם. סוכני ה-AI מוצאים את ההזדמנות ומכינים טיוטת הגשה שחוסכת את רוב העבודה הידנית ומקצרת את זמן ההגשה, ואתם מגישים. הקשר עם המממן נשאר אצלכם.</p></details>
+    <details><summary>איך שומרים על המידע שלנו?</summary><p>המידע שלכם נשאר שלכם. אתם מחליטים אילו חומרים לשתף, וכל ארגון מבודד: סוכני ה-AI ניגשים רק לחומרים של הארגון שלכם, ורק למה שנדרש למשימה. המסמכים נשמרים באחסון פרטי באירופה ומעובדים אצל ספק AI שמתחייב לא לאמן מודלים על המידע. כל תוצר עובר בדיקת איכות לפני שהוא מגיע אליכם.</p></details>
+    <details><summary>מתי מקבלים משהו?</summary><p>תוך ימים ספורים מההרשמה, לפעמים כבר באותו יום: מייל ההזדמנויות הראשון.</p></details>
+    <div class="faq-more" id="faqMore" hidden>
+      <details><summary>מה נותנת טיוטת ההגשה?</summary><p>הטיוטה עונה על שאלות הקול הקורא מתוך הפרופיל שלכם, ומנוסחת כמו שהארגון שלכם כותב: בשפה רשמית, עם הנוסחים הקבועים שלכם, או לפי התבנית שאתם עובדים איתה. כל פרט חסר מסומן, כדי שתשלימו. במסלולי 3 חודשים ושנתי כלולה טיוטה אחת בחודש. צריכים יותר? דברו איתי.</p></details>
+      <details><summary>כמה מיילים תקבלו?</summary><p>בממוצע מייל בשבוע, כשיש הזדמנויות ששוות את הזמן שלכם.</p></details>
+      <details><summary>למה מינימום 3 חודשים?</summary><p>3 חודשים הם פרק זמן מספק על מנת שמערכת ה-AI תלמד את הארגון שלכם בצורה אפקטיבית. ההתאמות משתפרות מחודש לחודש.</p></details>
+      <details><summary>מה קורה אחרי 3 חודשים?</summary><p>ממשיכים חודש-בחודשו באותו מחיר, ואפשר להפסיק בכל חודש. אפשר גם לעבור למסלול השנתי.</p></details>
+      <details><summary>אפשר להתחיל ב-3 חודשים ולעבור לשנתי?</summary><p>כן. עוברים לשנתי בכל שלב בתוך 3 החודשים הראשונים, ומה ששילמתם מתקזז מהמחיר השנתי.</p></details>
+      <details><summary>צריך ידע טכני?</summary><p>לא, וזה כל הכיף! אין מערכת ללמוד ואין סיסמאות: ההזדמנויות מגיעות אליכם למייל, וטיוטה מבקשים בטופס קצר. אני על הצד הטכני, ואתם דואגים לארגון שלכם :)</p></details>
+      <details><summary>חותמים על הסכם סודיות (NDA)?</summary><p>כן, עם כל ארגון שרוצה, לפני שאתם שולחים חומר.</p></details>
+    </div>
+    <div class="faq-all"><button type="button" class="btn btn-ghost" id="faqAll" aria-controls="faqMore" aria-expanded="false">לכל השאלות והתשובות</button></div>
+  </div>
+</section>
+
+
+<section id="about">
+  <div class="wrap">
+    <div class="about">
+      <img src="assets/ronen.jpg" alt="רונן אבירם">
+      <div>
+        <h2>רונן אבירם</h2>
+        <div class="role">מילואימניק ואבא ל-3</div>
+        <p>שנים בעולמות הטכנולוגיה ובהייטק כמנהל מוצר.</p>
+        <p class="strong">מאמין בכל לבי שה-AI פחות חשוב מהאנשים שמשתמשים בו.</p>
+        <div class="ctas">
+          <button class="btn btn-primary" type="button" onclick="openSignup()">לתיאום שיחה</button>
+          <a class="btn btn-wa" href="https://wa.me/972542569556?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%9F%21%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%94-AI%20%D7%9C%D7%92%D7%99%D7%95%D7%A1%20%D7%9E%D7%A9%D7%90%D7%91%D7%99%D7%9D" target="_blank" rel="noopener">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2S21.8 6.6 21.8 12 17.4 21.8 12 21.8z"/></svg>
+            וואטסאפ
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    © <span id="year">2026</span> רונן אבירם · כל הזכויות שמורות
+    <div class="legal" dir="ltr"><a href="terms.html" data-modal="terms.html" data-narrow>Terms</a> · <a href="privacy.html" data-modal="privacy.html" data-narrow>Privacy</a> · <a href="accessibility.html" data-modal="accessibility.html" data-narrow>Accessibility</a> · <a href="data-deletion.html" data-modal="data-deletion.html" data-narrow>Data deletion</a></div>
+  </div>
+</footer>
+
+<dialog class="modal" id="modal" aria-label="חלון">
+  <button class="modal-close" type="button" onclick="closeModal()"><span class="mc-d">סגירה</span><span class="mc-m">חזרה לאתר</span></button>
+  <iframe id="modal-frame" title=""></iframe>
+</dialog>
+
+<dialog class="sheet" id="signup" aria-labelledby="signup-title">
+  <button class="modal-close" type="button" onclick="closeSignup()">סגירה</button>
+  <h2 id="signup-title">שיחת היכרות קצרה</h2>
+    <div class="form-card">
+      <form id="signup-form" novalidate>
+        <div class="row2">
+          <div class="field" data-f="name"><label for="f-name">שם מלא</label><input id="f-name" name="name" autocomplete="name"><div class="err" role="alert">נא למלא שם</div></div>
+          <div class="field" data-f="org"><label for="f-org">שם הארגון</label><input id="f-org" name="org" autocomplete="organization"><div class="err" role="alert">נא למלא את שם הארגון</div></div>
+        </div>
+        <div class="row2">
+          <div class="field" data-f="email"><label for="f-email">מייל</label><input id="f-email" name="email" type="email" autocomplete="email"><div class="err" role="alert">נא למלא כתובת מייל תקינה</div></div>
+          <div class="field" data-f="phone"><label for="f-phone">טלפון <small style="color:var(--ink-3);font-weight:400">(לא חובה)</small></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר טלפון תקין</div></div>
+        </div>
+        <fieldset class="field" data-f="plan"><legend style="font-weight:600;font-size:14px;margin-bottom:6px">מסלול שמעניין אתכם</legend>
+          <div class="seg">
+            <label><input type="radio" name="plan" value="3 חודשים"><span>3 חודשים</span></label>
+            <label><input type="radio" name="plan" value="שנתי" checked><span>שנתי</span></label>
+            <label><input type="radio" name="plan" value="ליווי צמוד"><span>ליווי צמוד</span></label>
+          </div>
+        </fieldset>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);opacity:0;border:0;padding:0">
+        <button class="btn btn-primary" type="submit">שליחת פנייה</button>
+        <div class="form-note">הפרטים משמשים רק כדי לחזור אליכם.</div>
+      </form>
+      <div class="done" id="signup-done">
+        <div class="party" id="done-party" aria-hidden="true">🎉</div>
+        <h3>נשלח בהצלחה</h3>
+        <p id="send-ok">אחזור אליכם בהקדם.</p>
+        <p id="send-failed" hidden style="color:#B91C1C">נראה שהשליחה לא עברה. כתבו לי בוואטסאפ ואחזור אליכם.</p>
+        <div class="ctas" id="send-failed-cta" hidden>
+          <a class="btn btn-wa" href="https://wa.me/972542569556?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%9F%21%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%94-AI%20%D7%9C%D7%92%D7%99%D7%95%D7%A1%20%D7%9E%D7%A9%D7%90%D7%91%D7%99%D7%9D" target="_blank" rel="noopener">וואטסאפ</a>
+        </div>
+      </div>
+    </div>
+</dialog>
+
+<div class="sticky" id="sticky">
+  <a class="btn btn-primary" href="#signup">לקביעת שיחת היכרות</a>
+  <a class="btn btn-wa" href="https://wa.me/972542569556?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%9F%21%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%94-AI%20%D7%9C%D7%92%D7%99%D7%95%D7%A1%20%D7%9E%D7%A9%D7%90%D7%91%D7%99%D7%9D" target="_blank" rel="noopener" aria-label="וואטסאפ">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2S21.8 6.6 21.8 12 17.4 21.8 12 21.8z"/></svg>
+  </a>
+</div>
+
+<script>
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx6cGRWfyXonKIWVMtfYse0Rke_X_Ar14lAvbUFTZqjmptKMPgPKPH04FVIHbVprE3eZg/exec';
+  const CALENDLY_URL = 'https://calendly.com/ronen_aviram/ai_for_org';
+  // Emails each lead to Ronen (fundraising-agent app, src/app/api/lead/route.ts).
+  const LEAD_URL = 'https://fundraising-agent-eight.vercel.app/api/lead';
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Demo and privacy open in a window over the page (blurred backdrop); the link still works without JS.
+  const modal = document.getElementById('modal');
+  const modalFrame = document.getElementById('modal-frame');
+  function openModal(src, narrow) {
+    modalFrame.src = src;
+    modal.classList.toggle('narrow', !!narrow);
+    modal.showModal();
+  }
+  function closeModal() { modal.close(); modalFrame.src = 'about:blank'; }
+  document.querySelectorAll('[data-modal]').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(a.dataset.modal, a.hasAttribute('data-narrow'));
+  }));
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  modal.addEventListener('close', () => { modalFrame.src = 'about:blank'; });
+  // The call form opens in a window over the page.
+  const signupDlg = document.getElementById('signup');
+  function openSignup() { if (modal.open) closeModal(); signupDlg.showModal(); }
+  function closeSignup() { signupDlg.close(); }
+  document.querySelectorAll('a[href="#signup"]:not([data-buy])').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); openSignup(); }));
+  signupDlg.addEventListener('click', (e) => { if (e.target === signupDlg) closeSignup(); });
+  // The guided demo's last step: close the window and open the call form.
+  window.addEventListener('message', (e) => {
+    if (e.data === 'demo-signup') openSignup();
+  });
+
+
+
+  // Where the lead came from (?utm_source=...&ref=...), so each webinar or partner link can be told apart.
+  const params = new URLSearchParams(location.search);
+  const leadSource = ['utm_source', 'utm_medium', 'utm_campaign', 'ref']
+    .filter((k) => params.get(k)).map((k) => k + '=' + params.get(k)).join('&');
+
+  let lead = null;
+  let calendlyClicked = false;
+
+  function openCalendly(trackAsLead) {
+    if (trackAsLead && lead && !calendlyClicked) {
+      calendlyClicked = true;
+      fetch(SHEETS_URL, {
+        method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'calendly_update', email: lead.email, phone: lead.phone })
+      }).catch(() => {});
+    }
+    // Calendly loads only when someone asks to book (privacy page: "if you chose to book a call").
+    if (typeof Calendly !== 'undefined') { Calendly.initPopupWidget({ url: CALENDLY_URL }); return; }
+    const css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(css);
+    const js = document.createElement('script');
+    js.src = 'https://assets.calendly.com/assets/external/widget.js';
+    js.onload = () => Calendly.initPopupWidget({ url: CALENDLY_URL });
+    js.onerror = () => window.open(CALENDLY_URL, '_blank', 'noopener');
+    document.head.appendChild(js);
+  }
+
+  // Israeli mobile or landline, local or +972; empty is fine (phone is optional).
+  function normalizePhone(raw) {
+    let d = raw.replace(/\D/g, '');
+    if (d.startsWith('972')) d = '0' + d.slice(3);
+    return d;
+  }
+
+  const form = document.getElementById('signup-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = (n) => form.elements[n].value.trim();
+    const data = { name: v('name'), org: v('org'), email: v('email'), phone: normalizePhone(v('phone')) };
+    const checks = {
+      name: data.name.length > 1,
+      org: data.org.length > 1,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email),
+      phone: data.phone === '' || /^0\d{8,9}$/.test(data.phone)
+    };
+    let ok = true;
+    Object.entries(checks).forEach(([k, good]) => {
+      const f = form.querySelector('[data-f="' + k + '"]'); f.classList.toggle('bad', !good);
+      const inp = f.querySelector('input'); if (inp) inp.setAttribute('aria-invalid', String(!good));
+      if (!good) ok = false;
+    });
+    if (!ok) { form.querySelector('.bad input').focus(); return; }
+
+    lead = data;
+    // Same sheet as the AI-for-Org quiz: q1 marks the source page, q2 the plan, q3 the campaign link.
+    fetch(SHEETS_URL, {
+      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: data.name, role: '', org: data.org, email: data.email, phone: data.phone,
+        q1: 'הרשמה: Vista.AI', q2: form.elements.plan.value, q3: leadSource,
+        lang: 'he', timestamp: new Date().toISOString(), calendlyClicked: false, source: 'fundraising'
+      })
+    }).catch(() => {});
+    const submit = form.querySelector('button[type=submit]');
+    submit.disabled = true; submit.textContent = 'שולחים…';
+    const showDone = (sent) => {
+      if (!sent) {
+        document.getElementById('send-failed').hidden = false;
+        document.getElementById('send-failed-cta').hidden = false;
+        document.getElementById('send-ok').hidden = true;
+        document.querySelector('#signup-done h3').textContent = 'משהו השתבש בשליחה';
+        document.getElementById('done-party').hidden = true;
+      }
+      form.style.display = 'none';
+      document.getElementById('signup-done').style.display = 'block';
+    };
+    fetch(LEAD_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ name: data.name, org: data.org, email: data.email, phone: data.phone,
+        plan: form.elements.plan.value, source: leadSource, website: form.elements.website.value })
+    }).then((res) => showDone(res.ok)).catch(() => showDone(false));
+  });
+
+  form.querySelectorAll('input').forEach((el) => el.addEventListener('input', () => el.closest('.field').classList.remove('bad')));
+
+  // "לרכישה": goes to the payment page once it exists; until then it opens the call form with the plan chosen.
+  // Grow (Meshulam) payment pages per plan; a plan without one opens the signup form instead.
+  const PAY_URLS = {
+    'שנתי': 'https://pay.grow.link/MTAxNjkw~653b2a188f291f845633f7a7a01908bc-NDE1MTMyNg',
+    '3 חודשים': 'https://pay.grow.link/MTAxNjkw~0b419062fa6bb493d4cc4cf0d80d576c-NDE1MTM0OQ',
+    'ליווי צמוד': 'https://pay.grow.link/MTAxNjkw~0bb82e4eb35d1c14e4372d998d0fc3ea-NDE1MTM1OQ',
+  };
+  document.querySelectorAll('[data-buy]').forEach((a) => a.addEventListener('click', (e) => {
+    const url = PAY_URLS[a.dataset.buy];
+    if (url) { a.href = url; return; }
+    e.preventDefault();
+    const r = form.querySelector('input[name=plan][value="' + a.dataset.buy + '"]');
+    if (r) r.checked = true;
+    openSignup();
+  }));
+
+  // ROI bars fill when they scroll into view.
+  const roi = document.getElementById('roi');
+  if ('IntersectionObserver' in window) new IntersectionObserver((es, o) => { if (es.some((e) => e.isIntersecting)) { roi.classList.add('go'); o.disconnect(); } }, { threshold: 0.4 }).observe(roi);
+  else roi.classList.add('go');
+
+  // FAQ: the key questions show first; the rest open in place.
+  document.getElementById('faqAll').addEventListener('click', (e) => {
+    document.getElementById('faqMore').hidden = false;
+    e.currentTarget.parentElement.remove();
+  });
+
+  // Phones: tabs pick which plan card shows.
+  const planCards = document.querySelectorAll('.plans .plan');
+  const planTabs = document.querySelectorAll('.plan-tabs button');
+  function showPlan(i) {
+    planCards.forEach((c, k) => c.classList.toggle('on', k === i));
+    planTabs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
+  }
+  planTabs.forEach((t) => t.addEventListener('click', () => showPlan(+t.dataset.i)));
+  showPlan(1);
+
+  // Mobile sticky CTA: show after the hero.
+  const sticky = document.getElementById('sticky');
+  function onScroll() { sticky.classList.toggle('show', window.scrollY > 520); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // rotating benefits
+  const rots = [...document.querySelectorAll('.rotator .rot')];
+  let i = 0;
+  if (!reduce && rots.length > 1) setInterval(() => {
+    const cur = rots[i]; i = (i + 1) % rots.length; const next = rots[i];
+    cur.classList.remove('on'); cur.classList.add('out');
+    setTimeout(() => cur.classList.remove('out'), 650);
+    next.classList.add('on');
+  }, 2800);
+  // scroll progress
+  const sp = document.querySelector('.scroll-progress');
+  let tick = false;
+  const onScroll = () => { if (tick) return; tick = true; requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    sp.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')'; tick = false; }); };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  // reveal on scroll: only what starts below the fold, so the first screen is complete
+  if (reduce || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll('section h2, .vid, .flow, .try, .value, .timeline .tstep, .plan, .roi, .roi-line, .faq details, .about').forEach((el) => {
+    if (el.getBoundingClientRect().top < innerHeight) return;
+    const sib = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+    el.classList.add('rv', 'pre'); el.style.transitionDelay = Math.min(sib, 4) * 80 + 'ms';
+    io.observe(el);
+  });
+})();
+</script>
+<script>
+(() => {
+  const flow = document.querySelector('.flow');
+  if (!flow) return;
+  const svgs = [...flow.querySelectorAll('svg.flow-d, svg.flow-m')];
+  svgs.forEach((g) => { try { g.pauseAnimations(); g.setCurrentTime(0); } catch (e) {} });
+  const start = () => {
+    flow.classList.add('play');
+    svgs.forEach((g) => { try { g.setCurrentTime(0); g.unpauseAnimations(); } catch (e) {} });
+  };
+  if (!('IntersectionObserver' in window)) { start(); return; }
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { start(); io.disconnect(); } }, { threshold: .35 });
+  io.observe(flow);
+})();
+</script>
+</body>
+</html>
