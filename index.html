@@ -305,6 +305,15 @@ dialog.sheet h2 { margin-bottom: 16px; font-size: 26px; padding: 0 84px; }
 @media (max-width: 560px) { dialog.sheet h2 { font-size: 22px; padding: 0 84px 0 16px; text-align: right; } }
 dialog.sheet .form-card { box-shadow: none; margin: 0 18px 12px; }
 @media (max-width: 560px) { dialog.sheet .form-card { margin: 0 10px 10px; padding: 20px; } }
+/* purchase form: same window as the call form, plus a short intro, the terms box and the secure-payment note */
+.buy-sub { color: var(--ink-2); font-size: 15px; margin: -8px 84px 16px; text-align: center; }
+@media (max-width: 560px) { .buy-sub { margin: -8px 16px 14px; text-align: right; } }
+.opt { color: var(--ink-3); font-weight: 400; }
+.field.check label { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+.field.check input { width: 20px; min-height: 20px; height: 20px; margin-top: 1px; flex: none; accent-color: var(--accent); }
+.field.check a { color: var(--accent); }
+.buy-sec { font-size: 13px; color: var(--ink-3); text-align: center; margin-top: 12px; display: flex; gap: 6px; align-items: center; justify-content: center; }
+.buy-sec svg { width: 14px; height: 14px; }
 dialog.modal iframe { display: block; width: 100%; height: 100%; border: 0; }
 .modal-close { position: absolute; top: 12px; left: 12px; z-index: 2; font: inherit; font-weight: 600; border: 1px solid var(--border); background: #fff; border-radius: 10px; padding: 6px 14px; cursor: pointer; min-height: 40px; }
 @media (max-width: 720px) { dialog.modal, dialog.modal.narrow { width: 100vw; height: 100dvh; max-width: none; border-radius: 0; } }
@@ -747,6 +756,40 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
     </div>
 </dialog>
 
+<dialog class="sheet" id="buy" aria-labelledby="buy-title">
+  <button class="modal-close" type="button" onclick="closeBuy()">סגירה</button>
+  <h2 id="buy-title">פרטי הארגון</h2>
+  <p class="buy-sub">עוד רגע לתשלום. עם הפרטים האלה נתחיל לעבוד מיד.</p>
+    <div class="form-card">
+      <form id="buy-form" novalidate>
+        <div class="row2">
+          <div class="field" data-f="org"><label for="b-org">שם הארגון</label><input id="b-org" name="org" autocomplete="organization"><div class="err" role="alert">נא למלא את שם הארגון</div></div>
+          <div class="field" data-f="orgNumber"><label for="b-orgnum">מספר עמותה / ח״פ <small class="opt">(לא חובה)</small></label><input id="b-orgnum" name="orgNumber" inputmode="numeric" dir="ltr" style="text-align:right"></div>
+        </div>
+        <div class="field" data-f="orgSite"><label for="b-site">אתר הארגון <small class="opt">(לא חובה)</small></label><input id="b-site" name="orgSite" type="url" autocomplete="url" dir="ltr" style="text-align:right" placeholder="www.example.org.il"></div>
+        <div class="row2">
+          <div class="field" data-f="name"><label for="b-name">שם איש הקשר</label><input id="b-name" name="name" autocomplete="name"><div class="err" role="alert">נא למלא שם</div></div>
+          <div class="field" data-f="role"><label for="b-role">תפקיד <small class="opt">(לא חובה)</small></label><input id="b-role" name="role" autocomplete="organization-title"></div>
+        </div>
+        <div class="row2">
+          <div class="field" data-f="email"><label for="b-email">מייל לקבלת ההזדמנויות</label><input id="b-email" name="email" type="email" autocomplete="email"><div class="err" role="alert">נא למלא כתובת מייל תקינה</div></div>
+          <div class="field" data-f="phone"><label for="b-phone">טלפון</label><input id="b-phone" name="phone" type="tel" autocomplete="tel" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר טלפון תקין</div></div>
+        </div>
+        <fieldset class="field" data-f="plan"><legend style="font-weight:600;font-size:14px;margin-bottom:6px">מסלול</legend>
+          <div class="seg">
+            <label><input type="radio" name="plan" value="3 חודשים"><span>3 חודשים</span></label>
+            <label><input type="radio" name="plan" value="שנתי" checked><span>שנתי</span></label>
+            <label><input type="radio" name="plan" value="ליווי צמוד"><span>ליווי צמוד</span></label>
+          </div>
+        </fieldset>
+        <div class="field check" data-f="terms"><label><input type="checkbox" name="terms"><span>קראתי ואני מסכימ/ה ל<a href="terms.html" data-modal="terms.html" data-narrow>תנאי השימוש</a> ול<a href="privacy.html" data-modal="privacy.html" data-narrow>מדיניות הפרטיות</a></span></label><div class="err" role="alert">נא לאשר את התנאים</div></div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);opacity:0;border:0;padding:0">
+        <button class="btn btn-primary" type="submit">המשך לתשלום</button>
+        <div class="buy-sec"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>התשלום בדף מאובטח של Grow</div>
+      </form>
+    </div>
+</dialog>
+
 <div class="sticky" id="sticky">
   <a class="btn btn-primary" href="#signup">לקביעת שיחת היכרות</a>
   <a class="btn btn-wa" href="https://wa.me/972542569556?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%9F%21%20%D7%9C%D7%92%D7%91%D7%99%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%94-AI%20%D7%9C%D7%92%D7%99%D7%95%D7%A1%20%D7%9E%D7%A9%D7%90%D7%91%D7%99%D7%9D" target="_blank" rel="noopener" aria-label="וואטסאפ">
@@ -876,21 +919,69 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
 
   form.querySelectorAll('input').forEach((el) => el.addEventListener('input', () => el.closest('.field').classList.remove('bad')));
 
-  // "לרכישה": goes to the payment page once it exists; until then it opens the call form with the plan chosen.
-  // Grow (Meshulam) payment pages per plan; a plan without one opens the signup form instead.
+  // Grow (Meshulam) payment pages per plan.
   const PAY_URLS = {
     'שנתי': 'https://pay.grow.link/MTAxNjkw~653b2a188f291f845633f7a7a01908bc-NDE1MTMyNg',
     '3 חודשים': 'https://pay.grow.link/MTAxNjkw~0b419062fa6bb493d4cc4cf0d80d576c-NDE1MTM0OQ',
     'ליווי צמוד': 'https://pay.grow.link/MTAxNjkw~0bb82e4eb35d1c14e4372d998d0fc3ea-NDE1MTM1OQ',
   };
+  // "לרכישה" opens the purchase form (the org's details, before Grow). The server saves it; once Grow reports the
+  // payment it sends the welcome email, and a form that never paid reaches Ronen the next morning.
+  const buyDlg = document.getElementById('buy');
+  const buyForm = document.getElementById('buy-form');
+  function closeBuy() { buyDlg.close(); }
+  buyDlg.addEventListener('click', (e) => { if (e.target === buyDlg) closeBuy(); });
   document.querySelectorAll('[data-buy]').forEach((a) => a.addEventListener('click', (e) => {
-    const url = PAY_URLS[a.dataset.buy];
-    if (url) { a.href = url; return; }
     e.preventDefault();
-    const r = form.querySelector('input[name=plan][value="' + a.dataset.buy + '"]');
+    const r = buyForm.querySelector('input[name=plan][value="' + a.dataset.buy + '"]');
     if (r) r.checked = true;
-    openSignup();
+    if (modal.open) closeModal();
+    buyDlg.showModal();
   }));
+  buyForm.querySelectorAll('[data-modal]').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault(); closeBuy(); openModal(a.dataset.modal, true);
+  }));
+  buyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = (n) => buyForm.elements[n].value.trim();
+    const plan = buyForm.elements.plan.value;
+    const data = { org: v('org'), orgNumber: v('orgNumber'), orgSite: v('orgSite'), name: v('name'), role: v('role'),
+      email: v('email'), phone: normalizePhone(v('phone')), plan };
+    const checks = {
+      org: data.org.length > 1,
+      name: data.name.length > 1,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email),
+      phone: /^0\d{8,9}$/.test(data.phone),
+      terms: buyForm.elements.terms.checked
+    };
+    let ok = true;
+    Object.entries(checks).forEach(([k, good]) => {
+      const f = buyForm.querySelector('[data-f="' + k + '"]'); f.classList.toggle('bad', !good);
+      const inp = f.querySelector('input'); if (inp) inp.setAttribute('aria-invalid', String(!good));
+      if (!good) ok = false;
+    });
+    if (!ok) { buyForm.querySelector('.bad input').focus(); return; }
+
+    fetch(SHEETS_URL, {
+      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: data.name, role: data.role, org: data.org, email: data.email, phone: data.phone,
+        q1: 'רכישה: Vista.AI', q2: plan, q3: leadSource,
+        lang: 'he', timestamp: new Date().toISOString(), calendlyClicked: false, source: 'fundraising'
+      })
+    }).catch(() => {});
+    const submit = buyForm.querySelector('button[type=submit]');
+    submit.disabled = true; submit.textContent = 'עוברים לתשלום…';
+    // Payment never waits on our server: after 5 seconds, or on any error, go to Grow anyway.
+    let gone = false;
+    const go = () => { if (gone) return; gone = true; location.href = PAY_URLS[plan]; };
+    setTimeout(go, 5000);
+    fetch(LEAD_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ kind: 'purchase', ...data, source: leadSource, website: buyForm.elements.website.value })
+    }).catch(() => {}).finally(go);
+  });
+  buyForm.querySelectorAll('input').forEach((el) => el.addEventListener('input', () => { const f = el.closest('.field'); if (f) f.classList.remove('bad'); }));
 
   // ROI bars fill when they scroll into view.
   const roi = document.getElementById('roi');
