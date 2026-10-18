@@ -186,6 +186,7 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
 @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
 .err { color: #B91C1C; font-size: 13px; margin-top: 4px; display: none; }
 .field.bad .err { display: block; }
+.err .fix { font: inherit; font-weight: 700; color: #B91C1C; background: none; border: 0; padding: 0 2px; text-decoration: underline; cursor: pointer; }
 .field.bad input { border-color: #FCA5A5; }
 .form-card .btn { width: 100%; margin-top: 6px; }
 .form-note { font-size: 13px; color: var(--ink-3); text-align: center; margin-top: 12px; }
@@ -730,8 +731,8 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
           <div class="field" data-f="org"><label for="f-org">שם הארגון</label><input id="f-org" name="org" autocomplete="organization"><div class="err" role="alert">נא למלא את שם הארגון</div></div>
         </div>
         <div class="row2">
-          <div class="field" data-f="email"><label for="f-email">מייל</label><input id="f-email" name="email" type="email" autocomplete="email"><div class="err" role="alert">נא למלא כתובת מייל תקינה</div></div>
-          <div class="field" data-f="phone"><label for="f-phone">טלפון <small style="color:var(--ink-3);font-weight:400">(לא חובה)</small></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר טלפון תקין</div></div>
+          <div class="field" data-f="email"><label for="f-email">מייל</label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="160"><div class="err" role="alert">נא למלא כתובת מייל תקינה, למשל name@org.org.il</div></div>
+          <div class="field" data-f="phone"><label for="f-phone">טלפון נייד <small style="color:var(--ink-3);font-weight:400">(לא חובה)</small></label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר נייד תקין: 10 ספרות שמתחילות ב-05</div></div>
         </div>
         <fieldset class="field" data-f="plan"><legend style="font-weight:600;font-size:14px;margin-bottom:6px">מסלול שמעניין אתכם</legend>
           <div class="seg">
@@ -772,8 +773,8 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
           <div class="field" data-f="role"><label for="b-role">תפקיד <small class="opt">(לא חובה)</small></label><input id="b-role" name="role" autocomplete="organization-title"></div>
         </div>
         <div class="row2">
-          <div class="field" data-f="email"><label for="b-email">מייל לקבלת ההזדמנויות</label><input id="b-email" name="email" type="email" autocomplete="email"><div class="err" role="alert">נא למלא כתובת מייל תקינה</div></div>
-          <div class="field" data-f="phone"><label for="b-phone">טלפון</label><input id="b-phone" name="phone" type="tel" autocomplete="tel" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר טלפון תקין</div></div>
+          <div class="field" data-f="email"><label for="b-email">מייל לקבלת ההזדמנויות</label><input id="b-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="160"><div class="err" role="alert">נא למלא כתובת מייל תקינה, למשל name@org.org.il</div></div>
+          <div class="field" data-f="phone"><label for="b-phone">טלפון נייד</label><input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר נייד תקין: 10 ספרות שמתחילות ב-05</div></div>
         </div>
         <fieldset class="field" data-f="plan"><legend style="font-weight:600;font-size:14px;margin-bottom:6px">מסלול</legend>
           <div class="seg">
@@ -861,7 +862,39 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
     document.head.appendChild(js);
   }
 
-  // Israeli mobile or landline, local or +972; empty is fine (phone is optional).
+  // Strict checks, also shown as soon as a field is left (Ronen, 18.10.2026): an Israeli mobile (05X + 7 digits,
+  // local or +972) and a well-formed email; common domain typos (gmial.com, gmail.co…) are caught with a fix.
+  const isMobile = (d) => /^05\d{8}$/.test(d);
+  const isEmailOk = (e) => /^[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(e) && !/\.\.|^\.|\.@|@-/.test(e);
+  const TYPO = { 'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gamil.com': 'gmail.com', 'gnail.com': 'gmail.com',
+    'gmail.co': 'gmail.com', 'gmail.con': 'gmail.com', 'gmail.cm': 'gmail.com', 'gmail.co.il': 'gmail.com', 'gmail.com.il': 'gmail.com',
+    'hotmial.com': 'hotmail.com', 'hotmail.co': 'hotmail.com', 'hotmail.con': 'hotmail.com', 'outlook.co': 'outlook.com', 'outlook.con': 'outlook.com',
+    'yahoo.co': 'yahoo.com', 'yahoo.con': 'yahoo.com', 'walla.co': 'walla.co.il', 'walla.com': 'walla.co.il', 'wala.co.il': 'walla.co.il' };
+  const emailFix = (e) => { const i = e.lastIndexOf('@'); const fix = i > 0 && TYPO[e.slice(i + 1).toLowerCase()]; return fix ? e.slice(0, i + 1) + fix : ''; };
+  // Marks one field; for an email typo the error offers the fixed address, and a click applies it.
+  function markField(f, good, fix) {
+    f.classList.toggle('bad', !good);
+    const inp = f.querySelector('input'); if (inp) inp.setAttribute('aria-invalid', String(!good));
+    const err = f.querySelector('.err'); if (!err) return;
+    if (!err.dataset.msg) err.dataset.msg = err.textContent;
+    if (fix) {
+      err.textContent = 'האם התכוונתם ל-';
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'fix'; b.dir = 'ltr'; b.textContent = fix + '?';
+      b.addEventListener('click', () => { inp.value = fix; markField(f, true); inp.focus(); });
+      err.appendChild(b);
+    } else err.textContent = err.dataset.msg;
+  }
+  function checkEmail(f, value) { const fix = emailFix(value); const good = isEmailOk(value) && !fix; markField(f, good, fix); return good; }
+  function checkPhone(f, value, optional) { const d = normalizePhone(value); const good = (optional && d === '') || isMobile(d); markField(f, good); return good; }
+  [['f-email', 0], ['b-email', 0], ['f-phone', 1], ['b-phone', 2]].forEach(([id, kind]) => {
+    const inp = document.getElementById(id); if (!inp) return;
+    inp.addEventListener('blur', () => {
+      const v = inp.value.trim(); if (!v) return;
+      if (kind === 0) checkEmail(inp.closest('.field'), v); else checkPhone(inp.closest('.field'), v, kind === 1);
+    });
+  });
+
+  // Local or +972 → digits only, leading 0.
   function normalizePhone(raw) {
     let d = raw.replace(/\D/g, '');
     if (d.startsWith('972')) d = '0' + d.slice(3);
@@ -876,13 +909,12 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
     const checks = {
       name: data.name.length > 1,
       org: data.org.length > 1,
-      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email),
-      phone: data.phone === '' || /^0\d{8,9}$/.test(data.phone)
+      email: checkEmail(form.querySelector('[data-f="email"]'), data.email),
+      phone: checkPhone(form.querySelector('[data-f="phone"]'), data.phone, true)
     };
     let ok = true;
     Object.entries(checks).forEach(([k, good]) => {
-      const f = form.querySelector('[data-f="' + k + '"]'); f.classList.toggle('bad', !good);
-      const inp = f.querySelector('input'); if (inp) inp.setAttribute('aria-invalid', String(!good));
+      if (k !== 'email' && k !== 'phone') markField(form.querySelector('[data-f="' + k + '"]'), good);
       if (!good) ok = false;
     });
     if (!ok) { form.querySelector('.bad input').focus(); return; }
@@ -950,14 +982,13 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
     const checks = {
       org: data.org.length > 1,
       name: data.name.length > 1,
-      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email),
-      phone: /^0\d{8,9}$/.test(data.phone),
+      email: checkEmail(buyForm.querySelector('[data-f="email"]'), data.email),
+      phone: checkPhone(buyForm.querySelector('[data-f="phone"]'), data.phone, false),
       terms: buyForm.elements.terms.checked
     };
     let ok = true;
     Object.entries(checks).forEach(([k, good]) => {
-      const f = buyForm.querySelector('[data-f="' + k + '"]'); f.classList.toggle('bad', !good);
-      const inp = f.querySelector('input'); if (inp) inp.setAttribute('aria-invalid', String(!good));
+      if (k !== 'email' && k !== 'phone') markField(buyForm.querySelector('[data-f="' + k + '"]'), good);
       if (!good) ok = false;
     });
     if (!ok) { buyForm.querySelector('.bad input').focus(); return; }
