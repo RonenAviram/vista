@@ -998,6 +998,7 @@ body.stage-4 .sidebar { display: none; }
   body.stage-3 .sidebar { display: none; }
 }
 </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="38c47160-eb28-4517-a2d4-15a1fa64aac1"></script>
 </head>
 <body class="stage-1">
 
@@ -2462,6 +2463,7 @@ function approveProfile() {
 
   // Each step starts in place (no page reload), so "next" never sends the visitor back.
   function run(step) {
+    try { window.umami && umami.track('דמו: שלב', { step }); } catch (e) {}
     timers.forEach(clearInterval); timers.length = 0;
     clearCoach(); clearBar();
     idx = STEPS.indexOf(step);

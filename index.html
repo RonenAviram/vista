@@ -513,6 +513,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
 .vcap-line .on { color: #E8A33D; transition: color .12s; }
 @media (prefers-reduced-motion: reduce) { .vcap-line .on { transition: none; } }
 </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="38c47160-eb28-4517-a2d4-15a1fa64aac1"></script>
 </head>
 <body>
 
@@ -831,6 +832,10 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
 </div>
 
 <script>
+  // Site analytics (Umami, cookieless, EU). Events in Hebrew so the dashboard reads plainly.
+  function ua(name, data) { try { if (window.umami) umami.track(name, data); } catch (e) {} }
+</script>
+<script>
   const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx6cGRWfyXonKIWVMtfYse0Rke_X_Ar14lAvbUFTZqjmptKMPgPKPH04FVIHbVprE3eZg/exec';
   const CALENDLY_URL = 'https://calendly.com/ronen_aviram/ai_for_org';
   // Emails each lead to Ronen (fundraising-agent app, src/app/api/lead/route.ts).
@@ -1024,6 +1029,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
     const submit = form.querySelector('button[type=submit]');
     submit.disabled = true; submit.textContent = 'שולחים…';
     const showDone = (sent) => {
+      if (sent) ua('טופס שיחה נשלח', { plan: form.elements.plan.value });
       if (!sent) {
         document.getElementById('send-failed').hidden = false;
         document.getElementById('send-failed-cta').hidden = false;
@@ -1097,6 +1103,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
     submit.disabled = true; submit.textContent = 'עוברים לתשלום…';
     // Payment never waits on our server: after 5 seconds, or on any error, go to Grow anyway.
     let gone = false;
+    ua('מעבר לתשלום', { plan });
     const go = () => { if (gone) return; gone = true; location.href = PAY_URLS[plan]; };
     setTimeout(go, 5000);
     fetch(LEAD_URL, {
@@ -1179,6 +1186,47 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
   const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { start(); io.disconnect(); } }, { threshold: .35 });
   io.observe(flow);
 })();
+</script>
+<script>
+  (function () {
+    const clicks = [
+      ['[data-buy]', (el) => ['פתיחת טופס רכישה', { plan: el.dataset.buy }]],
+      ['a[href="#videos"].btn', () => ['כפתור סרטון בפתיחה']],
+      ['.bar-links a', (el) => ['תפריט', { item: el.textContent.trim() }]],
+      ['a[href="#signup"]', (el) => ['פתיחת טופס שיחה', { where: (el.closest('section, .hero, header') || {}).id || (el.closest('.hero') ? 'פתיחה' : 'אחר') }]],
+      ['[data-modal^="fundraising-demo"]', (el) => ['פתיחת דמו', { step: el.dataset.modal.split('#')[1] || '' }]],
+      ['.vid[data-video]', (el) => ['סרטון: הפעלה', { video: el.dataset.title }]],
+      ['#faqAll', () => ['כל השאלות']],
+    ];
+    document.addEventListener('click', (e) => {
+      for (const [sel, ev] of clicks) {
+        const el = e.target.closest(sel);
+        if (el) { const [n, d] = ev(el); ua(n, d); return; }
+      }
+    }, true);
+    document.querySelectorAll('.faq details').forEach((d) => d.addEventListener('toggle', () => {
+      if (d.open) ua('שאלה נפתחה', { q: d.querySelector('summary').textContent.trim() });
+    }));
+    // How far each video is watched: 25/50/75/100%, once per opening.
+    const v = document.getElementById('vplayer-video');
+    let seen = new Set();
+    const title = () => document.getElementById('vplayer-title').textContent;
+    v.addEventListener('loadedmetadata', () => { seen = new Set(); });
+    v.addEventListener('timeupdate', () => {
+      if (!v.duration) return;
+      const pct = (v.currentTime / v.duration) * 100;
+      [25, 50, 75].forEach((m) => { if (pct >= m && !seen.has(m)) { seen.add(m); ua('סרטון: צפייה', { video: title(), pct: m }); } });
+    });
+    v.addEventListener('ended', () => { if (!seen.has(100)) { seen.add(100); ua('סרטון: צפייה', { video: title(), pct: 100 }); } });
+    // Scroll depth: 25/50/75/100%, once per visit.
+    const depth = new Set();
+    addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - innerHeight;
+      if (h <= 0) return;
+      const pct = (scrollY / h) * 100;
+      [25, 50, 75, 100].forEach((m) => { if (pct >= m - 1 && !depth.has(m)) { depth.add(m); ua('גלילה', { pct: m }); } });
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
