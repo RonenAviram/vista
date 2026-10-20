@@ -549,8 +549,8 @@ dialog.vplayer .modal-close { position: static; }
     <h2>צפו בסרטונים</h2>
     <p class="vid-sub">שני סרטונים קצרים, פחות מ-4 דקות בסך הכול.</p>
     <div class="vids vids-2">
-      <button type="button" class="vid" data-video="assets/video/part1.mp4" data-title="מהפרופיל ועד טיוטת ההגשה"><span class="vid-poster" style="background-image:url(assets/video/part1.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">2:48</span></span><h3>מהפרופיל ועד טיוטת ההגשה</h3><p>בניית הפרופיל, סריקת ההזדמנויות ובקשת טיוטה</p></button>
-      <button type="button" class="vid" data-video="assets/video/part2.mp4" data-title="מאחורי הקלעים"><span class="vid-poster" style="background-image:url(assets/video/part2.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">1:03</span></span><h3>מאחורי הקלעים</h3><p>איך סוכני ה-AI בונים את ההגשה</p></button>
+      <button type="button" class="vid" data-video="assets/video/part1.mp4" data-title="מהפרופיל ועד טיוטת ההגשה"><span class="vid-poster" style="background-image:url(assets/video/part1.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">2:20</span></span><h3>מהפרופיל ועד טיוטת ההגשה</h3><p>בניית הפרופיל, סריקת ההזדמנויות ובקשת טיוטה</p></button>
+      <button type="button" class="vid" data-video="assets/video/part2.mp4" data-title="מאחורי הקלעים"><span class="vid-poster" style="background-image:url(assets/video/part2.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">0:53</span></span><h3>מאחורי הקלעים</h3><p>איך סוכני ה-AI בונים את ההגשה</p></button>
     </div>
   </div>
 </section>
@@ -854,6 +854,13 @@ dialog.vplayer .modal-close { position: static; }
     vvideo.play().catch(() => {});
   }));
   document.getElementById('vplayer-close').addEventListener('click', closeVideo);
+  // Phones: going full screen turns the video sideways where the browser allows it (Android); iPhones rotate with the phone.
+  document.addEventListener('fullscreenchange', () => {
+    const o = screen.orientation;
+    if (!o || !o.lock) return;
+    if (document.fullscreenElement === vvideo) o.lock('landscape').catch(() => {});
+    else if (o.unlock) o.unlock();
+  });
   vplayer.addEventListener('click', (e) => { if (e.target === vplayer) closeVideo(); });
   vplayer.addEventListener('close', () => { vvideo.pause(); vvideo.removeAttribute('src'); vvideo.load(); });
   // The call form opens in a window over the page.
