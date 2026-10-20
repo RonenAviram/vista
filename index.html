@@ -504,6 +504,7 @@ dialog.vplayer video { display: block; width: 100%; height: auto; aspect-ratio: 
 .vplayer-x:hover { background: rgba(255,255,255,.24); }
 .vplayer-x:focus-visible { outline: 3px solid #E8A33D; outline-offset: 2px; }
 .vplayer-x svg { width: 18px; height: 18px; }
+dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(31,58,95,.82); color: #fff; }
 </style>
 </head>
 <body>
@@ -852,6 +853,10 @@ dialog.vplayer video { display: block; width: 100%; height: auto; aspect-ratio: 
   document.querySelectorAll('.vid[data-video]').forEach((b) => b.addEventListener('click', () => {
     vvideo.src = b.dataset.video;
     vvideo.poster = b.dataset.video.replace('.mp4', '.jpg');
+    vvideo.querySelectorAll('track').forEach((t) => t.remove());
+    const track = document.createElement('track');
+    Object.assign(track, { kind: 'captions', srclang: 'he', label: 'עברית', src: b.dataset.video.replace('.mp4', '.he.vtt'), default: true });
+    vvideo.appendChild(track);
     vplayer.setAttribute('aria-label', b.dataset.title || 'סרטון');
     document.getElementById('vplayer-title').textContent = b.dataset.title || '';
     vplayer.showModal();
