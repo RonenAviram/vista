@@ -487,6 +487,18 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
 @keyframes nsPop { from { transform: scale(0); } }
 @keyframes nsPing { 0% { box-shadow: 0 0 0 2px #fff, 0 0 0 2px rgba(232,163,61,.6); } 100% { box-shadow: 0 0 0 2px #fff, 0 0 0 12px rgba(232,163,61,0); } }
 @media (prefers-reduced-motion: reduce) { .hero .no-sys .ns-mail, .hero .no-sys .ns-mail i { animation: none; } }
+/* explainer videos (Ronen's Loom recordings, hosted here): two cards under the hero, played in a centred window */
+.vids-2 { grid-template-columns: repeat(2, 1fr); max-width: 880px; margin: 0 auto; gap: 20px; }
+@media (max-width: 640px) { .vids-2 { grid-template-columns: 1fr; } }
+.vids-2 .vid-poster { background-size: cover; background-position: center top; box-shadow: inset 0 0 0 1px rgba(31,58,95,.08); }
+.vids-2 .vid-play { width: 64px; height: 64px; background: #E8A33D; box-shadow: 0 6px 20px rgba(31,58,95,.25); }
+.vids-2 .vid-play svg { color: #1F3A5F; width: 22px; height: 22px; }
+.vid-dur { position: absolute; bottom: 8px; left: 8px; background: rgba(31,58,95,.85); color: #fff; font-size: 12.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; direction: ltr; }
+.vids-2 .vid h3 { font-size: 17px; }
+dialog.vplayer { margin: auto; inset: 0; width: min(1100px, 96vw); padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+dialog.vplayer::backdrop { background: rgba(26,29,35,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+dialog.vplayer video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: 86vh; background: #000; }
+dialog.vplayer .modal-close { top: 10px; left: 10px; }
 </style>
 </head>
 <body>
@@ -498,6 +510,7 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
       <b dir="ltr">Vista<span>.AI</span></b>
     </a>
     <nav class="bar-links">
+      <a class="hide-m" href="#videos">סרטונים</a>
       <a class="hide-m" href="#demo">איך זה עובד</a>
       <a class="hide-m" href="#try">נסו בעצמכם</a>
       <a class="hide-m" href="#pricing">מחיר</a>
@@ -525,19 +538,18 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
     <p class="no-sys"><span class="ns-mail" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><i></i></span><span>זו לא עוד מערכת, ואתם לא צריכים משתמש וסיסמה: נרשמים פעם אחת, ומקבלים הזדמנויות למייל</span></p>
     <div class="ctas">
       <a class="btn btn-primary" href="#signup">לקביעת שיחת היכרות קצרה</a>
+      <a class="btn btn-ghost" href="#videos"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>צפייה בסרטון</a>
     </div>
   </div>
 </div>
 
-<section id="videos" class="videos-section" hidden>
+<section id="videos" class="videos-section">
   <div class="wrap">
-    <h2>ככה זה עובד</h2>
-    <p class="vid-sub">ארבעה סרטונים קצרים, אחד לכל שלב.</p>
-    <div class="vids">
-      <button type="button" class="vid" data-video="1"><span class="vid-poster"><span class="tnum">01</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>בניית הפרופיל</h3><p>איך הסוכנים לומדים את הארגון שלכם</p></button>
-      <button type="button" class="vid" data-video="2"><span class="vid-poster"><span class="tnum">02</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>סריקת ההזדמנויות</h3><p>אילו קולות קוראים מתאימים, ולמה</p></button>
-      <button type="button" class="vid" data-video="3"><span class="vid-poster"><span class="tnum">03</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>בניית ההגשה</h3><p>מהקול הקורא לטיוטת הגשה</p></button>
-      <button type="button" class="vid" data-video="4"><span class="vid-poster"><span class="tnum">04</span><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></span><h3>מאחורי הקלעים</h3><p>מה הסוכנים עושים בזמן שאתם עובדים</p></button>
+    <h2>צפו בסרטונים</h2>
+    <p class="vid-sub">שני סרטונים קצרים, פחות מ-4 דקות בסך הכול.</p>
+    <div class="vids vids-2">
+      <button type="button" class="vid" data-video="assets/video/part1.mp4" data-title="מהפרופיל ועד טיוטת ההגשה"><span class="vid-poster" style="background-image:url(assets/video/part1.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">2:48</span></span><h3>מהפרופיל ועד טיוטת ההגשה</h3><p>בניית הפרופיל, סריקת ההזדמנויות ובקשת טיוטה</p></button>
+      <button type="button" class="vid" data-video="assets/video/part2.mp4" data-title="מאחורי הקלעים"><span class="vid-poster" style="background-image:url(assets/video/part2.jpg)"><span class="vid-play"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span class="vid-dur">1:03</span></span><h3>מאחורי הקלעים</h3><p>איך סוכני ה-AI בונים את ההגשה</p></button>
     </div>
   </div>
 </section>
@@ -717,6 +729,11 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
   </div>
 </footer>
 
+<dialog class="vplayer" id="vplayer" aria-label="סרטון">
+  <button class="modal-close" type="button" id="vplayer-close">סגירה</button>
+  <video id="vplayer-video" controls playsinline preload="none"></video>
+</dialog>
+
 <dialog class="modal" id="modal" aria-label="חלון">
   <button class="modal-close" type="button" onclick="closeModal()"><span class="mc-d">סגירה</span><span class="mc-m">חזרה לאתר</span></button>
   <iframe id="modal-frame" title=""></iframe>
@@ -822,6 +839,20 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
   }));
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
   modal.addEventListener('close', () => { modalFrame.src = 'about:blank'; });
+  // Explainer videos play in a centred window; closing it stops the video.
+  const vplayer = document.getElementById('vplayer');
+  const vvideo = document.getElementById('vplayer-video');
+  function closeVideo() { vplayer.close(); }
+  document.querySelectorAll('.vid[data-video]').forEach((b) => b.addEventListener('click', () => {
+    vvideo.src = b.dataset.video;
+    vvideo.poster = b.dataset.video.replace('.mp4', '.jpg');
+    vplayer.setAttribute('aria-label', b.dataset.title || 'סרטון');
+    vplayer.showModal();
+    vvideo.play().catch(() => {});
+  }));
+  document.getElementById('vplayer-close').addEventListener('click', closeVideo);
+  vplayer.addEventListener('click', (e) => { if (e.target === vplayer) closeVideo(); });
+  vplayer.addEventListener('close', () => { vvideo.pause(); vvideo.removeAttribute('src'); vvideo.load(); });
   // The call form opens in a window over the page.
   const signupDlg = document.getElementById('signup');
   function openSignup() { if (modal.open) closeModal(); signupDlg.showModal(); }
