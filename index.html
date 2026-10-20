@@ -505,6 +505,13 @@ dialog.vplayer video { display: block; width: 100%; height: auto; aspect-ratio: 
 .vplayer-x:focus-visible { outline: 3px solid #E8A33D; outline-offset: 2px; }
 .vplayer-x svg { width: 18px; height: 18px; }
 dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(31,58,95,.82); color: #fff; }
+/* karaoke captions (Ronen, 20.10): each word turns amber as it is said; full screen falls back to the plain track */
+.vstage { position: relative; }
+.vcap { position: absolute; left: 0; right: 0; bottom: max(14%, 64px); display: flex; justify-content: center; padding: 0 12px; pointer-events: none; }
+.vcap-line { max-width: 90%; text-align: center; font-weight: 700; font-size: clamp(14px, 2.2vw, 22px); line-height: 1.5; background: rgba(31,58,95,.55); padding: 4px 14px; border-radius: 10px; text-shadow: 0 1px 2px rgba(0,0,0,.5); color: #fff; }
+.vcap-line:empty { display: none; }
+.vcap-line .on { color: #E8A33D; transition: color .12s; }
+@media (prefers-reduced-motion: reduce) { .vcap-line .on { transition: none; } }
 </style>
 </head>
 <body>
@@ -737,7 +744,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
 
 <dialog class="vplayer" id="vplayer" aria-label="סרטון">
   <div class="vplayer-bar"><span class="vplayer-title" id="vplayer-title"></span><button class="vplayer-x" type="button" id="vplayer-close" aria-label="סגירה"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-  <video id="vplayer-video" controls playsinline preload="none"></video>
+  <div class="vstage"><video id="vplayer-video" controls playsinline preload="none"></video><div class="vcap" aria-hidden="true"><div class="vcap-line" id="vcap-line"></div></div></div>
 </dialog>
 
 <dialog class="modal" id="modal" aria-label="חלון">
@@ -855,8 +862,10 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
     vvideo.poster = b.dataset.video.replace('.mp4', '.jpg');
     vvideo.querySelectorAll('track').forEach((t) => t.remove());
     const track = document.createElement('track');
-    Object.assign(track, { kind: 'captions', srclang: 'he', label: 'עברית', src: b.dataset.video.replace('.mp4', '.he.vtt'), default: true });
+    Object.assign(track, { kind: 'captions', srclang: 'he', label: 'עברית', src: b.dataset.video.replace('.mp4', '.he.vtt') });
     vvideo.appendChild(track);
+    track.track.mode = 'hidden';
+    loadKaraoke(b.dataset.video.replace('.mp4', '.he.json'));
     vplayer.setAttribute('aria-label', b.dataset.title || 'סרטון');
     document.getElementById('vplayer-title').textContent = b.dataset.title || '';
     vplayer.showModal();
@@ -872,7 +881,37 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
     else if (o.unlock) o.unlock();
   });
   vplayer.addEventListener('click', (e) => { if (e.target === vplayer) closeVideo(); });
-  vplayer.addEventListener('close', () => { vvideo.pause(); vvideo.removeAttribute('src'); vvideo.load(); });
+  // Karaoke captions: the cue under the playhead, each word lit from its start time.
+  const vcap = document.getElementById('vcap-line');
+  let kCues = [], kCue = null, kRaf = 0;
+  const kCache = {};
+  function loadKaraoke(url) {
+    kCues = []; kCue = null; vcap.textContent = '';
+    (kCache[url] = kCache[url] || fetch(url).then((r) => r.json()).catch(() => []))
+      .then((c) => { kCues = c; });
+  }
+  function kTick() {
+    const t = vvideo.currentTime;
+    const cue = kCues.find((c) => t >= c.s && t < c.e) || null;
+    if (cue !== kCue) {
+      kCue = cue; vcap.textContent = '';
+      if (cue) cue.w.forEach(([w], i) => { if (i) vcap.append(' '); const sp = document.createElement('span'); sp.textContent = w; vcap.append(sp); });
+    }
+    if (cue) cue.w.forEach(([, s], i) => vcap.children[i].classList.toggle('on', t >= s));
+    kRaf = vvideo.paused ? 0 : requestAnimationFrame(kTick);
+  }
+  vvideo.addEventListener('play', () => { cancelAnimationFrame(kRaf); kRaf = requestAnimationFrame(kTick); });
+  vvideo.addEventListener('seeked', kTick);
+  // Full screen shows only the video, so it falls back to the plain caption track.
+  function plainCaptions(on) {
+    const tt = vvideo.textTracks[0];
+    if (tt) tt.mode = on ? 'showing' : 'hidden';
+  }
+  document.addEventListener('fullscreenchange', () => plainCaptions(document.fullscreenElement === vvideo));
+  vvideo.addEventListener('webkitbeginfullscreen', () => plainCaptions(true));
+  vvideo.addEventListener('webkitendfullscreen', () => plainCaptions(false));
+  vplayer.addEventListener('close', () => {
+    cancelAnimationFrame(kRaf); kCue = null; vcap.textContent = ''; vvideo.pause(); vvideo.removeAttribute('src'); vvideo.load(); });
   // The call form opens in a window over the page.
   const signupDlg = document.getElementById('signup');
   function openSignup() { if (modal.open) closeModal(); signupDlg.showModal(); }
