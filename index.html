@@ -843,12 +843,14 @@ dialog.vplayer .modal-close { position: static; }
   // Explainer videos play in a centred window; closing it stops the video.
   const vplayer = document.getElementById('vplayer');
   const vvideo = document.getElementById('vplayer-video');
+  vvideo.defaultPlaybackRate = 1.2; // Ronen, 20.10: the recordings play a little faster by default
   function closeVideo() { vplayer.close(); }
   document.querySelectorAll('.vid[data-video]').forEach((b) => b.addEventListener('click', () => {
     vvideo.src = b.dataset.video;
     vvideo.poster = b.dataset.video.replace('.mp4', '.jpg');
     vplayer.setAttribute('aria-label', b.dataset.title || 'סרטון');
     vplayer.showModal();
+    vvideo.playbackRate = 1.2;
     vvideo.play().catch(() => {});
   }));
   document.getElementById('vplayer-close').addEventListener('click', closeVideo);
