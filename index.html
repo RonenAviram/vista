@@ -495,11 +495,15 @@ footer a { color: #fff; } footer .legal a { color: color-mix(in srgb, #fff 70%, 
 .vids-2 .vid-play svg { color: #1F3A5F; width: 22px; height: 22px; }
 .vid-dur { position: absolute; bottom: 8px; left: 8px; background: rgba(31,58,95,.85); color: #fff; font-size: 12.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; direction: ltr; }
 .vids-2 .vid h3 { font-size: 17px; }
-dialog.vplayer { margin: auto; inset: 0; width: min(1100px, 96vw); padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+dialog.vplayer { margin: auto; inset: 0; width: min(1100px, 96vw); padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #1F3A5F; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
 dialog.vplayer::backdrop { background: rgba(26,29,35,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 dialog.vplayer video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: calc(86vh - 60px); background: #000; }
-.vplayer-bar { display: flex; justify-content: flex-end; padding: 8px; background: #000; }
-dialog.vplayer .modal-close { position: static; }
+.vplayer-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: #1F3A5F; }
+.vplayer-title { color: #fff; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.vplayer-x { flex: none; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.vplayer-x:hover { background: rgba(255,255,255,.24); }
+.vplayer-x:focus-visible { outline: 3px solid #E8A33D; outline-offset: 2px; }
+.vplayer-x svg { width: 18px; height: 18px; }
 </style>
 </head>
 <body>
@@ -731,7 +735,7 @@ dialog.vplayer .modal-close { position: static; }
 </footer>
 
 <dialog class="vplayer" id="vplayer" aria-label="סרטון">
-  <div class="vplayer-bar"><button class="modal-close" type="button" id="vplayer-close">סגירה</button></div>
+  <div class="vplayer-bar"><span class="vplayer-title" id="vplayer-title"></span><button class="vplayer-x" type="button" id="vplayer-close" aria-label="סגירה"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <video id="vplayer-video" controls playsinline preload="none"></video>
 </dialog>
 
@@ -849,6 +853,7 @@ dialog.vplayer .modal-close { position: static; }
     vvideo.src = b.dataset.video;
     vvideo.poster = b.dataset.video.replace('.mp4', '.jpg');
     vplayer.setAttribute('aria-label', b.dataset.title || 'סרטון');
+    document.getElementById('vplayer-title').textContent = b.dataset.title || '';
     vplayer.showModal();
     vvideo.playbackRate = 1.2;
     vvideo.play().catch(() => {});
