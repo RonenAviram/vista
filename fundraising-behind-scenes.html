@@ -183,7 +183,7 @@ svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z
     <div class="hubcol">
       <div class="hub" id="hub">
         <div class="swirl"></div>
-        <div class="core" id="core"><i class="ti ti-sparkles"></i><b>מערכת<br>סוכני AI</b><small></small></div>
+        <div class="core" id="core"><i class="ti ti-sparkles"></i><b>סוכני AI</b><small></small></div>
       </div>
       
     </div>
@@ -272,7 +272,7 @@ function play(){
   nodes.forEach(n=>{n.classList.remove('wired','ping','dim');n.classList.add('in')});paras.forEach(p=>p.classList.remove('in'));
   reqs.forEach(r=>r.classList.remove('ok','warn'));document.getElementById('badges').classList.remove('in');
   const core=document.getElementById('core');core.classList.remove('busy','done');
-  core.querySelector('i').className='ti ti-sparkles';core.querySelector('small').textContent='';core.querySelector('b').innerHTML='מערכת<br>סוכני AI';
+  core.querySelector('i').className='ti ti-sparkles';core.querySelector('small').textContent='';core.querySelector('b').innerHTML='סוכני AI';
   setStatus('מעבד את הבקשה…');layout();
 
   // 1. sources are already visible; start flowing right away
@@ -306,7 +306,7 @@ function idle(){
   timers.forEach(clearTimeout);timers=[];particles.forEach(o=>o.el&&o.el.remove());particles=[];flowing=false;
   nodes.forEach(n=>n.classList.remove('in','wired','ping'));paras.forEach(p=>p.classList.remove('in'));
   reqs.forEach(r=>r.classList.remove('ok','warn'));document.getElementById('badges').classList.remove('in');
-  const core=document.getElementById('core');core.className='core idle';core.querySelector('b').innerHTML='מערכת<br>סוכני AI';document.getElementById('hub').classList.remove('busy');
+  const core=document.getElementById('core');core.className='core idle';core.querySelector('b').innerHTML='סוכני AI';document.getElementById('hub').classList.remove('busy');
   core.querySelector('small').textContent='';core.setAttribute('title','הפעלה');
   setStatus('מוכן להפעלה',true);document.getElementById('replay').style.visibility='hidden';nodes.forEach(n=>n.classList.add('in'));layout();
 }
