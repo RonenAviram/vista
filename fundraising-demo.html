@@ -2471,7 +2471,7 @@ function approveProfile() {
       when(() => visible('#toProfileBtn'), () => {
         coach('#toProfileBtn', 'הפרופיל מוכן. לחצו כדי לראות מה הסוכנים הבינו על הארגון.');
         document.getElementById('toProfileBtn').addEventListener('click', () => {
-          nextBar('הפרופיל מוכן במערכת. עכשיו היא יכולה לחפש עבורכם הזדמנויות.', 'לשלב הבא: סריקת הזדמנויות', () => run('scan'));
+          nextBar('הפרופיל מוכן. עכשיו סוכני ה-AI יכולים לחפש עבורכם הזדמנויות.', 'לשלב הבא: סריקת הזדמנויות', () => run('scan'));
           // The page's own "next" button makes the bar redundant: drop the bar once it is on screen.
           const approve = document.getElementById('approveBtn');
           approve.addEventListener('click', () => setTimeout(() => run('scan'), 0), { once: true });
