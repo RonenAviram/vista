@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vistagrants.co.il/sitemap.xml
