@@ -765,7 +765,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
         </div>
         <div class="row2">
           <div class="field" data-f="email"><label for="f-email">מייל</label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="160"><div class="err" role="alert">נא למלא כתובת מייל תקינה, למשל name@org.org.il</div></div>
-          <div class="field" data-f="phone"><label for="f-phone">טלפון נייד <small style="color:var(--ink-3);font-weight:400">(לא חובה)</small></label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר נייד תקין: 10 ספרות שמתחילות ב-05</div></div>
+          <div class="field" data-f="phone"><label for="f-phone">טלפון נייד</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="05X-XXXXXXX"><div class="err" role="alert">נא למלא מספר נייד תקין: 10 ספרות שמתחילות ב-05</div></div>
         </div>
         <fieldset class="field" data-f="plan"><legend style="font-weight:600;font-size:14px;margin-bottom:6px">מסלול שמעניין אתכם</legend>
           <div class="seg">
@@ -983,7 +983,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
   }
   function checkEmail(f, value) { const fix = emailFix(value); const good = isEmailOk(value) && !fix; markField(f, good, fix); return good; }
   function checkPhone(f, value, optional) { const d = normalizePhone(value); const good = (optional && d === '') || isMobile(d); markField(f, good); return good; }
-  [['f-email', 0], ['b-email', 0], ['f-phone', 1], ['b-phone', 2]].forEach(([id, kind]) => {
+  [['f-email', 0], ['b-email', 0], ['f-phone', 2], ['b-phone', 2]].forEach(([id, kind]) => {
     const inp = document.getElementById(id); if (!inp) return;
     inp.addEventListener('blur', () => {
       const v = inp.value.trim(); if (!v) return;
@@ -1007,7 +1007,7 @@ dialog.vplayer video::cue { font-family: 'Heebo', sans-serif; background: rgba(3
       name: data.name.length > 1,
       org: data.org.length > 1,
       email: checkEmail(form.querySelector('[data-f="email"]'), data.email),
-      phone: checkPhone(form.querySelector('[data-f="phone"]'), data.phone, true)
+      phone: checkPhone(form.querySelector('[data-f="phone"]'), data.phone, false)
     };
     let ok = true;
     Object.entries(checks).forEach(([k, good]) => {
